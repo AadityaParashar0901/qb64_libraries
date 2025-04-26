@@ -1,0 +1,49 @@
+Sub SaveScreen ()
+    FILE$ = Left$(Date$, 2) + Mid$(Date$, 4, 2) + Right$(Date$, 4) + Left$(Time$, 2) + Mid$(Time$, 4, 2) + Right$(Time$, 2)
+    T = PNG32(FILE$, 0, "")
+End Sub
+Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
+    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA, __IEND
+    Dim As String __EXT
+    Dim As Long __WIDTH, __HEIGHT, __F, __SOURCE, __OFFSET, __X, __Y, __P
+    __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)
+    __WIDTH = _Width(__IMAGE): __HEIGHT = _Height(__IMAGE)
+    __IHDR = "IHDR" + ReverseMKL$(__WIDTH) + ReverseMKL$(__HEIGHT) + MKI$(&H0608) + String$(3, 0)
+    __IMAGDATA = String$((__HEIGHT + 1) * __WIDTH * 4, 0)
+    __OFFSET = 1
+    __SOURCE = _Source
+    _Source __IMAGE
+    For __Y = 0 To __HEIGHT - 1
+        __OFFSET = __OFFSET + 1
+        For __X = 0 To __WIDTH - 1
+            __P = Point(__X, __Y)
+            Asc(__IMAGDATA, __OFFSET) = _SHR(__P, 16)
+            Asc(__IMAGDATA, __OFFSET + 1) = _SHR(__P, 8)
+            Asc(__IMAGDATA, __OFFSET + 2) = __P
+            Asc(__IMAGDATA, __OFFSET + 3) = _SHR(__P, 24)
+            __OFFSET = __OFFSET + 4
+        Next __X
+    Next __Y
+    _Source __SOURCE
+    __IDAT = "IDAT" + _Deflate$(__IMAGDATA)
+    __PNGDATA = __PNGHEADER + ReverseMKL$(&H0D) + __IHDR + ReverseMKL$(crc32~&(__IHDR)) + ReverseMKL$(Len(__IDAT) - 4) + __IDAT + ReverseMKL$(crc32~&(__IDAT)) + String$(4, 0) + "IEND" + MKL$(&H826042AE)
+    If Len(__FILENAME) Then
+        __F = FreeFile
+        If _StriCmp(Right$(__FILENAME, 4), ".png") Then __EXT = ".png" Else __EXT = ""
+        If _FileExists(__FILENAME + __EXT) Then Kill __FILENAME + __EXT
+        Open __FILENAME + __EXT For Binary As #__F
+        Put #__F, , __PNGDATA
+        Close #__F
+    End If
+    If _FileExists(__FILENAME) Then PNG32 = -1 Else PNG32 = 0
+End Function
+Function ReverseMKL$ (__L~&)
+    Dim __RMKL As String
+    __RMKL = String$(4, 0)
+    Asc(__RMKL, 1) = _SHR(__L~&, 24)
+    Asc(__RMKL, 2) = _SHR(__L~&, 16)
+    Asc(__RMKL, 3) = _SHR(__L~&, 8)
+    Asc(__RMKL, 4) = __L~&
+    ReverseMKL$ = __RMKL
+End Function
+'$Include:'./crc32.bm'

@@ -1,0 +1,26 @@
+'$Include:'png.bm'
+Sub ICO32 (__FILENAME As String, __IMAGE As Long)
+    Dim As Long __NEWIMAGE, __WIDTH, __HEIGHT, __DEST
+    __WIDTH = _Width(__IMAGE)
+    __HEIGHT = _Height(__IMAGE)
+    If __WIDTH > 256 Then __WIDTH = 256
+    If __HEIGHT > 256 Then __HEIGHT = 256
+    __NEWIMAGE = _NewImage(__WIDTH, __HEIGHT, 32)
+    __DEST = _Dest
+    _Dest __NEWIMAGE
+    _PutImage (0, 0)-(__WIDTH - 1, __HEIGHT - 1), __IMAGE
+    _Dest __DEST
+    Dim As String __ICO, __PNGDATA, __EXT
+    __T = PNG32("", __NEWIMAGE, __PNGDATA)
+    _FreeImage __NEWIMAGE
+    If __WIDTH = 256 Then __WIDTH = 0
+    If __HEIGHT = 256 Then __HEIGHT = 0
+    __ICO = MKI$(0) + MKI$(1) + MKI$(1) + Chr$(__WIDTH) + Chr$(__HEIGHT) + MKI$(0) + MKI$(1) + MKI$(32) + MKL$(Len(__PNGDATA))
+    __ICO = __ICO + MKL$(Len(__ICO) + 4) + __PNGDATA
+    __F = FreeFile
+    If LCase$(Right$(__FILENAME, 4)) <> ".ico" Then __EXT = ".ico" Else __EXT = ""
+    Open __FILENAME + __EXT For Output As #__F: Close #__F
+    Open __FILENAME + __EXT For Binary As #__F
+    Put #__F, , __ICO
+    Close #__F
+End Sub

@@ -1,0 +1,9 @@
+Function adler32~& (__IN$)
+    Dim As _Unsigned Long __A, __B
+    __A = 1: __B = 0
+    For __I = 1 To Len(__IN$)
+        __A = (__A + Asc(Mid$(__IN$, __I, 1))) Mod 65521
+        __B = (__B + __A) Mod 65521
+    Next __I
+    adler32~& = __B * 65536 + __A
+End Function

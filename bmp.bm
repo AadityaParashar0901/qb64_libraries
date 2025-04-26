@@ -1,0 +1,26 @@
+Sub BMP (__filename As String, __image As Long)
+    __x& = _Width(__image)
+    __y& = _Height(__image)
+    __H$ = "BM????QB64????" + Chr$(&H7C) + String$(3, 0) + MKL$(__x&) + MKL$(__y&) + Chr$(&H01) + Chr$(0) + Chr$(&H20) + Chr$(0) + Chr$(&H03) + MKL$(0) + Chr$(&H8C) + Chr$(&H0A) + Chr$(0) + Chr$(&H13) + Chr$(&H0B) + MKI$(0) + Chr$(&H13) + Chr$(&H0B) + String$(12, 0) + Chr$(&HFF) + MKI$(0) + Chr$(&HFF) + MKI$(0) + Chr$(&HFF) + String$(6, 0) + Chr$(&HFF) + "BGRs" + String$(48, 0) + Chr$(&H02) + String$(15, 0)
+    Mid$(__H$, 11, 4) = MKL$(Len(__H$))
+    __lastsource& = _Source
+    _Source __image&
+    __D$ = Space$(__x& * __y& * 4)
+    For __py& = 0 To __y& - 1 Step 1 ' read JPG image pixel color data
+        __R$ = Space$(__x& * 4)
+        For __px& = 0 To __x& - 1
+            Mid$(__R$, __px& * 4 + 1, 4) = MKL$(Point(__px&, __py&))
+        Next __px&
+        Mid$(__D$, (__y& - __py& - 1) * __x& * 4 + 1, __x& * 4) = __R$
+    Next __py&
+    _Source l__astsource&
+    Mid$(__H$, 35, 4) = MKL$(Len(__D$))
+    __B$ = __H$ + __D$ ' total file data bytes to create file
+    Mid$(__B$, 3, 4) = MKL$(Len(__B$))
+    If LCase$(Right$(__filename, 4)) <> ".bmp" Then __ext$ = ".bmp"
+    __f& = FreeFile
+    Open __filename + __ext$ For Output As __f&: Close __f& ' erases an existing file
+    Open __filename + __ext$ For Binary As __f&
+    Put __f&, , __B$
+    Close __f&
+End Sub
