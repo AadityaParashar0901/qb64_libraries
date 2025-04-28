@@ -1,6 +1,6 @@
 Sub SaveScreen ()
     FILE$ = Left$(Date$, 2) + Mid$(Date$, 4, 2) + Right$(Date$, 4) + Left$(Time$, 2) + Mid$(Time$, 4, 2) + Right$(Time$, 2)
-    T = PNG32(FILE$, 0, "")
+    T = PNG32(FILE$, _Source, "")
 End Sub
 Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA, __IEND
