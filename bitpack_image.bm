@@ -1,0 +1,28 @@
+Sub CreateBitPack (__IMAGE$, __IMAGE&)
+    __SOURCE& = _Source
+    _Source __IMAGE&
+    __WIDTH% = _Width(__IMAGE&)
+    __HEIGHT% = _Height(__IMAGE&)
+    __L! = __WIDTH% * __HEIGHT% / 8
+    __L~& = Int(__L!) + Sgn(__L! - Int(__L!))
+    __IMAGE$ = "BP" + MKI$(__WIDTH%) + MKI$(__HEIGHT%) + String$(__L~&, 0)
+    __K~& = 48
+    For __X% = 0 To __WIDTH% - 1
+        For __Y% = 0 To __HEIGHT% - 1
+            __P& = Point(__X%, __Y%)
+            If _Red32(__P&) + _Green32(__P&) + _Blue32(__P&) > 381 And _Alpha32(__P&) = 255 Then Asc(__IMAGE$, 1 + _SHR(__K~&, 3)) = _SetBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8)
+            __K~& = __K~& + 1
+    Next __Y%, __X%
+    _Source __SOURCE&
+End Sub
+Sub DrawBitPack (__IMAGE$, __OX%, __OY%, __COLOR&)
+    __K~& = 48
+    If Left$(__IMAGE$, 2) <> "BP" Then Exit Sub
+    __WIDTH% = CVI(Mid$(__IMAGE$, 3, 2))
+    __HEIGHT% = CVI(Mid$(__IMAGE$, 5, 2))
+    For __X% = 0 To __WIDTH% - 1
+        For __Y% = 0 To __HEIGHT% - 1
+            PSet (__OX% + __X%, __OY% + __Y%), __COLOR& And _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8)
+            __K~& = __K~& + 1
+    Next __Y%, __X%
+End Sub
