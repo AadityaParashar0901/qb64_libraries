@@ -43,11 +43,17 @@ Function ResizeBitPack$ (__IMAGE$, __SCALE_X!, __SCALE_Y!)
     __IMAGE& = _NewImage(__NWIDTH%, __NHEIGHT%, 32)
     __DEST& = _Dest
     _Dest __IMAGE&
+    $Checking:Off
     For __X% = 0 To __WIDTH% - 1
         For __Y% = 0 To __HEIGHT% - 1
-            Line (__OX% + __X% * __SCALE_X!, __OY% + __Y% * __SCALE_Y!)-(__OX% + __X% * __SCALE_X! + __SCALE_X! - 1, __OY% + __Y% * __SCALE_Y! + __SCALE_Y! - 1), _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8), BF
+            If __SCALE_X! > 1 Or __SCALE_Y! > 1 Then
+                Line (__OX% + __X% * __SCALE_X!, __OY% + __Y% * __SCALE_Y!)-(__OX% + __X% * __SCALE_X! + __SCALE_X! - 1, __OY% + __Y% * __SCALE_Y! + __SCALE_Y! - 1), _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8), BF
+            Else
+                PSet (__OX% + __X% * __SCALE_X!, __OY% + __Y% * __SCALE_Y!), _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8)
+            End If
             __K~& = __K~& + 1
     Next __Y%, __X%
+    $Checking:On
     _Dest __DEST&
     ResizeBitPack$ = CreateBitPack$(__IMAGE&)
     _FreeImage __IMAGE&
