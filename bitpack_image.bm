@@ -55,3 +55,25 @@ Sub DrawBitPackPart (__IMAGE$, __OX%, __OY%, __COLOR&, __I1X%, __I1Y%, __I2X%, _
             __K~& = __K~& + 1
     Next __Y%, __X%
 End Sub
+Sub DrawBitPackScale (__IMAGE$, __OX%, __OY%, __COLOR&, __SCALE_X!, __SCALE_Y!)
+    If Left$(__IMAGE$, 2) <> "BP" Then Exit Sub
+    __WIDTH% = CVI(Mid$(__IMAGE$, 3, 2))
+    __HEIGHT% = CVI(Mid$(__IMAGE$, 5, 2))
+    __K~& = 48
+    For __X% = 0 To __WIDTH% - 1
+        For __Y% = 0 To __HEIGHT% - 1
+            PSet (__OX% + __X% * __SCALE_X!, __OY% + __Y% * __SCALE_Y!), __COLOR& And _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8)
+            __K~& = __K~& + 1
+    Next __Y%, __X%
+End Sub
+Sub DrawBitPackPartScale (__IMAGE$, __OX%, __OY%, __COLOR&, __I1X%, __I1Y%, __I2X%, __I2Y%, __SCALE_X!, __SCALE_Y!)
+    If Left$(__IMAGE$, 2) <> "BP" Then Exit Sub
+    __WIDTH% = CVI(Mid$(__IMAGE$, 3, 2))
+    __HEIGHT% = CVI(Mid$(__IMAGE$, 5, 2))
+    __K~& = 48
+    For __X% = 0 To __WIDTH% - 1
+        For __Y% = 0 To __HEIGHT% - 1
+            If __I1X% <= __X% And __X% <= __I2X% And __I1Y% <= __Y% And __Y% <= __I2Y% Then PSet (__OX% + (__X% - __I1X%) * __SCALE_X!, __OY% + (__Y% - __I1Y%) * __SCALE_Y!), __COLOR& And _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8)
+            __K~& = __K~& + 1
+    Next __Y%, __X%
+End Sub
