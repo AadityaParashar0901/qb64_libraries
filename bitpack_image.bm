@@ -33,6 +33,25 @@ Sub SaveBitPack (__FILE$, __IMAGE$)
     Close #__F
     __TMP$ = ""
 End Sub
+Function ResizeBitPack$ (__IMAGE$, __SCALE_X!, __SCALE_Y!)
+    If Left$(__IMAGE$, 2) <> "BP" Or Len(__IMAGE$) < 6 Then Exit Function
+    __WIDTH% = CVI(Mid$(__IMAGE$, 3, 2))
+    __HEIGHT% = CVI(Mid$(__IMAGE$, 5, 2))
+    __K~& = 48
+    __NWIDTH% = __WIDTH% * __SCALE_X!
+    __NHEIGHT% = __HEIGHT% * __SCALE_Y!
+    __IMAGE& = _NewImage(__NWIDTH%, __NHEIGHT%, 32)
+    __DEST& = _Dest
+    _Dest __IMAGE&
+    For __X% = 0 To __WIDTH% - 1
+        For __Y% = 0 To __HEIGHT% - 1
+            Line (__OX% + __X% * __SCALE_X!, __OY% + __Y% * __SCALE_Y!)-(__OX% + __X% * __SCALE_X! + __SCALE_X! - 1, __OY% + __Y% * __SCALE_Y! + __SCALE_Y! - 1), _ReadBit(Asc(__IMAGE$, 1 + _SHR(__K~&, 3)), __K~& Mod 8), BF
+            __K~& = __K~& + 1
+    Next __Y%, __X%
+    _Dest __DEST&
+    ResizeBitPack$ = CreateBitPack$(__IMAGE&)
+    _FreeImage __IMAGE&
+End Function
 Sub DrawBitPack (__IMAGE$, __OX%, __OY%, __COLOR&)
     If Left$(__IMAGE$, 2) <> "BP" Or Len(__IMAGE$) < 6 Then Exit Sub
     __WIDTH% = CVI(Mid$(__IMAGE$, 3, 2))
