@@ -1,15 +1,18 @@
 Function Reverse$ (__IN$)
-    IN$ = __IN$
-    L~& = Len(IN$)
-    For I~& = 1 To _SHR(L~&, 1)
-        TMP~%% = Asc(IN$, I~&)
-        Asc(IN$, I~&) = Asc(IN$, L~& - I~& + 1)
-        Asc(IN$, L~& - I~& + 1) = TMP~%%
-    Next I~&
-    Reverse$ = IN$
+    Static __L~&, __I~&, __TMP~%%
+    $Checking:Off
+    ___IN$ = __IN$
+    __L~& = Len(___IN$)
+    For __I~& = 1 To _SHR(__L~&, 1)
+        __TMP~%% = Asc(___IN$, __I~&)
+        Asc(___IN$, __I~&) = Asc(___IN$, __L~& - __I~& + 1)
+        Asc(___IN$, __L~& - __I~& + 1) = __TMP~%%
+    Next __I~&
+    $Checking:On
+    Reverse$ = ___IN$
 End Function
-Function ReverseMKL$ (__L~&)
-    Dim __RMKL As String
+Function ReverseMKL$ (__L~&) Static
+    Dim __RMKL As String * 4
     __RMKL = String$(4, 0)
     Asc(__RMKL, 1) = _SHR(__L~&, 24)
     Asc(__RMKL, 2) = _SHR(__L~&, 16)
@@ -26,4 +29,10 @@ Function Replace$ (__IN$, __A$, __B$)
     Loop While P
     Replace$ = IN$
     IN$ = ""
+End Function
+Function StringSubtract$ (A$, B$)
+    I~& = InStr(A$, B$)
+    StringSubtract$ = A$
+    If I~& = 0 Then Exit Function
+    StringSubtract$ = Left$(A$, I~& - 1) + Mid$(A$, I~& + Len(B$))
 End Function

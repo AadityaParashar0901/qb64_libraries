@@ -1,6 +1,7 @@
-Function crc32~& (__IN$)
+Function crc32~& (__IN$) Static
     Dim As _Unsigned Long __CRC32_POLY, __CRC, __I
     Dim As _Unsigned _Byte __J
+    $Checking:Off
     __CRC32_POLY = &HEDB88320
     __CRC = &HFFFFFFFF
     For __I = 1 To Len(__IN$)
@@ -9,5 +10,6 @@ Function crc32~& (__IN$)
             If __CRC And 1 Then __CRC = (__CRC \ 2) Xor __CRC32_POLY Else __CRC = __CRC \ 2
         Next __J
     Next __I
+    $Checking:On
     crc32~& = Not __CRC
 End Function

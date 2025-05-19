@@ -10,6 +10,7 @@ Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     __OFFSET = 1
     __SOURCE = _Source
     _Source __IMAGE
+    $Checking:Off
     For __Y = 0 To __HEIGHT - 1
         __OFFSET = __OFFSET + 1
         For __X = 0 To __WIDTH - 1
@@ -21,6 +22,7 @@ Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
             __OFFSET = __OFFSET + 4
         Next __X
     Next __Y
+    $Checking:On
     _Source __SOURCE
     __IDAT = "IDAT" + _Deflate$(__IMAGDATA)
     __PNGDATA = __PNGHEADER + ReverseMKL$(&H0D) + __IHDR + ReverseMKL$(crc32~&(__IHDR)) + ReverseMKL$(Len(__IDAT) - 4) + __IDAT + ReverseMKL$(crc32~&(__IDAT)) + String$(4, 0) + "IEND" + MKL$(&H826042AE)
@@ -45,6 +47,7 @@ Function PNG (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     __OFFSET = 1
     __SOURCE = _Source
     _Source __IMAGE
+    $Checking:Off
     For __Y = 0 To __HEIGHT - 1
         __OFFSET = __OFFSET + 1
         For __X = 0 To __WIDTH - 1
@@ -55,6 +58,7 @@ Function PNG (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
             __OFFSET = __OFFSET + 3
         Next __X
     Next __Y
+    $Checking:On
     _Source __SOURCE
     __IDAT = "IDAT" + _Deflate$(__IMAGDATA)
     __PNGDATA = __PNGHEADER + ReverseMKL$(&H0D) + __IHDR + ReverseMKL$(crc32~&(__IHDR)) + ReverseMKL$(Len(__IDAT) - 4) + __IDAT + ReverseMKL$(crc32~&(__IDAT)) + String$(4, 0) + "IEND" + MKL$(&H826042AE)
@@ -79,6 +83,7 @@ Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     __OFFSET = 1
     __SOURCE = _Source
     _Source __IMAGE
+    $Checking:Off
     For __Y = 0 To __HEIGHT - 1
         __OFFSET = __OFFSET + 1
         For __X = 0 To __WIDTH - 1
@@ -87,6 +92,7 @@ Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
             __OFFSET = __OFFSET + 1
         Next __X
     Next __Y
+    $Checking:On
     _Source __SOURCE
     __IDAT = "IDAT" + _Deflate$(__IMAGDATA)
     __PNGDATA = __PNGHEADER + ReverseMKL$(&H0D) + __IHDR + ReverseMKL$(crc32~&(__IHDR)) + ReverseMKL$(Len(__IDAT) - 4) + __IDAT + ReverseMKL$(crc32~&(__IDAT)) + String$(4, 0) + "IEND" + MKL$(&H826042AE)
