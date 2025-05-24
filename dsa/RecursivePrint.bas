@@ -1,21 +1,3 @@
-$Console:Only
-Randomize Timer
-L$ = ListStringNew$
-For I = 1 To 10
-    M$ = MapNew$
-    MapSetKey M$, "Name", "Person" + Str$(I)
-    MapSetKey M$, "Roll Number", "0x" + UCase$(Hex$(1 + Int(Rnd * 1000)))
-    LL$ = ListLongNew$
-    For J = 1 To 5
-        ListLongAdd LL$, Int(Rnd * 101)
-    Next J
-    MapSetKey M$, "Marks", LL$
-    ListStringAdd L$, M$
-Next I
-Print "Student Details: "; RecursivePrint(L$, 0)
-End
-'$Include:'ListString.bas'
-'$Include:'Map.bas'
 Function RecursivePrint$ (S$, N~&)
     If Len(S$) < 5 Then RecursivePrint = S$: Exit Function
     If N~& = 0 Then N~& = Pos(0) - 1
@@ -26,11 +8,9 @@ Function RecursivePrint$ (S$, N~&)
         Case 6: RecursivePrint = "Tree"
         Case 7: RecursivePrint = "Hash Table"
         Case 8: RecursivePrint = RecursiveMapPrint(S$, N~& + 1)
-        Case Else: RecursivePrint = S$
+        Case Else: RecursivePrint = Replace$(S$, Chr$(0), ".")
     End Select
 End Function
-'$Include:'ListLong.bas'
-'$Include:'ListDouble.bas'
 Function RecursiveListStringPrint$ (LIST$, NEST~&)
     If Len(LIST$) < 5 Then Exit Function
     If Asc(LIST$) <> 1 And Asc(LIST$) <> 2 And Asc(LIST$) <> 5 Then Exit Function
