@@ -1,16 +1,22 @@
 Function RecursivePrint$ (S$, N~&)
-    If Len(S$) < 5 Then RecursivePrint = S$: Exit Function
     If N~& = 0 Then N~& = Pos(0) - 1
-    Select Case Asc(S$)
-        Case 1, 2, 5: RecursivePrint = RecursiveListStringPrint(S$, N~& + 1)
-        Case 3: RecursivePrint = ListLongPrint(S$)
-        Case 4: RecursivePrint = ListDoublePrint(S$)
-        Case 6: RecursivePrint = "Tree"
-        Case 7: RecursivePrint = "Hash Table"
-        Case 8: RecursivePrint = RecursiveMapPrint(S$, N~& + 1)
-        Case Else: T$ = Replace$(S$, Chr$(0), ".")
-            For I~%% = 1 To 31: T$ = Replace$(T$, Chr$(I~%%), "."): Next I~%%
-            RecursivePrint = T$
+    Select Case Len(S$)
+        Case 1: RecursivePrint = "Byte: " + _Trim$(Str$(Asc(S$)))
+        Case 2: RecursivePrint = "Integer: " + _Trim$(Str$(CVI(S$)))
+        Case 4: RecursivePrint = "Long: " + _Trim$(Str$(CVL(S$)))
+        Case Else:
+            Select Case Asc(S$)
+                Case 1, 2, 5: RecursivePrint = RecursiveListStringPrint(S$, N~& + 1)
+                Case 3: RecursivePrint = ListLongPrint(S$)
+                Case 4: RecursivePrint = ListDoublePrint(S$)
+                Case 6: RecursivePrint = "Tree"
+                Case 7: RecursivePrint = "Hash Table"
+                Case 8: RecursivePrint = RecursiveMapPrint(S$, N~& + 1)
+                Case Else:
+                    T$ = Replace$(S$, Chr$(0), ".")
+                    For I~%% = 1 To 31: T$ = Replace$(T$, Chr$(I~%%), "."): Next I~%%
+                    RecursivePrint = T$
+            End Select
     End Select
 End Function
 Function RecursiveListStringPrint$ (LIST$, NEST~&)
