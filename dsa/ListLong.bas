@@ -26,7 +26,7 @@ Function ListLongPrint$ (LIST$)
     N$ = _Trim$(Str$(CVL(Mid$(LIST$, 2 + I * 4, 4))))
     L = Len(N$)
     Mid$(T$, T_OFFSET, L + 1) = N$ + "]"
-    ListLongPrint$ = Left$(T$, T_OFFSET + L + 1)
+    ListLongPrint$ = Left$(T$, T_OFFSET + L)
 End Function
 Function ListLongLength~& (LIST$)
     If Len(LIST$) < 5 Then Exit Function

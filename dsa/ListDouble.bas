@@ -28,7 +28,7 @@ Function ListDoublePrint$ (LIST$)
     N$ = _Trim$(Str$(T#))
     L = Len(N$)
     Mid$(T$, T_OFFSET, L + 1) = N$ + "]"
-    ListDoublePrint$ = Left$(T$, T_OFFSET + L + 1)
+    ListDoublePrint$ = Left$(T$, T_OFFSET + L)
     T$ = ""
 End Function
 Function ListDoubleLength~& (LIST$)

@@ -61,7 +61,7 @@ Function ListStringPrint$ (LIST$)
     Next I
     L = CVI(Mid$(LIST$, O, 2))
     Mid$(T$, T_OFFSET, L + 1) = Mid$(LIST$, O + 2, L) + "]"
-    ListStringPrint$ = Left$(T$, T_OFFSET + L + 1)
+    ListStringPrint$ = Left$(T$, T_OFFSET + L)
 End Function
 Function ListStringLength~& (LIST$)
     If Len(LIST$) < 5 Then Exit Function

@@ -34,7 +34,6 @@ Function MapPrint$ (__MAP$)
         __LEN_KEY~& = CVL(Mid$(__MAP$, __OFFSET~&, 4))
         __LEN_VALUE~& = CVL(Mid$(__MAP$, __OFFSET~& + 4, 4))
         __K$ = Mid$(__MAP$, __OFFSET~& + 8, __LEN_KEY~&)
-        If __KEY$ = __K$ Then Exit Function
         __V$ = Mid$(__MAP$, __OFFSET~& + 8 + __LEN_KEY~&, __LEN_VALUE~&)
         __OFFSET~& = __OFFSET~& + 8 + __LEN_KEY~& + __LEN_VALUE~&
         __PRINT$ = __PRINT$ + __K$ + ":" + __V$
