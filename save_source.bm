@@ -37,13 +37,5 @@ Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     End If
     If _FileExists(__FILENAME) Then PNG32 = -1 Else PNG32 = 0
 End Function
-Function ReverseMKL$ (__L~&)
-    Dim __RMKL As String
-    __RMKL = String$(4, 0)
-    Asc(__RMKL, 1) = _SHR(__L~&, 24)
-    Asc(__RMKL, 2) = _SHR(__L~&, 16)
-    Asc(__RMKL, 3) = _SHR(__L~&, 8)
-    Asc(__RMKL, 4) = __L~&
-    ReverseMKL$ = __RMKL
-End Function
+'$Include:'./ReverseMKL.bm'
 '$Include:'./crc32.bm'

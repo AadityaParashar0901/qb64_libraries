@@ -11,15 +11,6 @@ Function Reverse$ (__IN$)
     $Checking:On
     Reverse$ = ___IN$
 End Function
-Function ReverseMKL$ (__L~&) Static
-    Dim __RMKL As String * 4
-    __RMKL = String$(4, 0)
-    Asc(__RMKL, 1) = _SHR(__L~&, 24)
-    Asc(__RMKL, 2) = _SHR(__L~&, 16)
-    Asc(__RMKL, 3) = _SHR(__L~&, 8)
-    Asc(__RMKL, 4) = __L~&
-    ReverseMKL$ = __RMKL
-End Function
 Function Replace$ (__IN$, __A$, __B$)
     Static As _Unsigned Long __P, __LA
     IN$ = __IN$
