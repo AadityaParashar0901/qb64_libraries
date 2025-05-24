@@ -8,7 +8,9 @@ Function RecursivePrint$ (S$, N~&)
         Case 6: RecursivePrint = "Tree"
         Case 7: RecursivePrint = "Hash Table"
         Case 8: RecursivePrint = RecursiveMapPrint(S$, N~& + 1)
-        Case Else: RecursivePrint = Replace$(S$, Chr$(0), ".")
+        Case Else: T$ = Replace$(S$, Chr$(0), ".")
+            For I~%% = 1 To 31: T$ = Replace$(T$, Chr$(I~%%), "."): Next I~%%
+            RecursivePrint = T$
     End Select
 End Function
 Function RecursiveListStringPrint$ (LIST$, NEST~&)
