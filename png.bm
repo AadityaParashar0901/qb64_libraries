@@ -1,6 +1,6 @@
 '$Include:'string.bm'
 Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
-    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA, __IEND
+    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA
     Dim As String __EXT
     Dim As Long __WIDTH, __HEIGHT, __F, __SOURCE, __OFFSET, __X, __Y, __P
     __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)
@@ -37,7 +37,7 @@ Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     If _FileExists(__FILENAME) Then PNG32 = -1 Else PNG32 = 0
 End Function
 Function PNG (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
-    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA, __IEND
+    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA
     Dim As String __EXT
     Dim As Long __WIDTH, __HEIGHT, __F, __SOURCE, __OFFSET, __X, __Y, __P
     __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)
@@ -73,7 +73,7 @@ Function PNG (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     If _FileExists(__FILENAME) Then PNG = -1 Else PNG = 0
 End Function
 Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
-    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA, __IEND
+    Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA
     Dim As String __EXT
     Dim As Long __WIDTH, __HEIGHT, __F, __SOURCE, __OFFSET, __X, __Y, __P
     __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)

@@ -14,8 +14,9 @@ End Function
 Function ListLongPrint$ (LIST$)
     If Len(LIST$) < 5 Then Exit Function
     If Asc(LIST$) <> 3 Then Exit Function
+    Dim As _Unsigned Long O, T_OFFSET, I, L
     O = 6: T_OFFSET = 2
-    T$ = String$(Len(LIST$) - 4, 0)
+    T$ = String$(CVL(Mid$(LIST$, 2, 4)) * 12 + 2, 0)
     Asc(T$) = 91 '[
     For I = 1 To CVL(Mid$(LIST$, 2, 4)) - 1
         N$ = _Trim$(Str$(CVL(Mid$(LIST$, 2 + I * 4, 4))))
@@ -41,32 +42,30 @@ End Sub
 Function ListLongGet& (LIST$, POSITION As _Unsigned Long)
     If Len(LIST$) < 5 Then Exit Function
     If Asc(LIST$) <> 3 Then Exit Function
-    If CVL(Mid$(LIST$, 2, 4)) < POSITION - 1 Then Exit Function
+    If CVL(Mid$(LIST$, 2, 4)) < POSITION Then Exit Function
     ListLongGet& = CVL(Mid$(LIST$, 2 + 4 * POSITION, 4))
 End Function
 Sub ListLongInsert (LIST$, ITEM&, POSITION As _Unsigned Long)
     If Len(LIST$) < 5 Then Exit Sub
     If Asc(LIST$) <> 3 Then Exit Sub
-    If CVL(Mid$(LIST$, 2, 4)) < POSITION - 1 Then Exit Sub
-    LIST$ = Chr$(3) + MKL$(CVL(Mid$(LIST$, 2, 4)) + 1) + Mid$(LIST$, 6, POSITION * 4) + MKL$(ITEM&) + Mid$(LIST$, 6 + POSITION * 4)
+    If CVL(Mid$(LIST$, 2, 4)) < POSITION Then Exit Sub
+    LIST$ = Chr$(3) + MKL$(CVL(Mid$(LIST$, 2, 4)) + 1) + Mid$(LIST$, 6, POSITION * 4 - 2) + MKL$(ITEM&) + Mid$(LIST$, 2 + POSITION * 4)
 End Sub
 Sub ListLongDelete (LIST$, POSITION As _Unsigned Long)
     If Len(LIST$) < 5 Then Exit Sub
     If Asc(LIST$) <> 3 Then Exit Sub
-    If CVL(Mid$(LIST$, 2, 4)) < POSITION - 1 Then Exit Sub
-    LIST$ = Chr$(3) + MKL$(CVL(Mid$(LIST$, 2, 4)) - 1) + Mid$(LIST$, 6, POSITION * 4) + Mid$(LIST$, 6 + POSITION * 4)
+    If CVL(Mid$(LIST$, 2, 4)) < POSITION Then Exit Sub
+    LIST$ = Chr$(3) + MKL$(CVL(Mid$(LIST$, 2, 4)) - 1) + Mid$(LIST$, 6, POSITION * 4 - 2) + Mid$(LIST$, 2 + POSITION * 4)
 End Sub
 Function ListLongSearch~& (LIST$, ITEM&)
     If Len(LIST$) < 5 Then Exit Function
     If Asc(LIST$) <> 3 Then Exit Function
-    For I = 1 To CVL(Mid$(LIST$, 2, 4))
-        If ITEM& = CVL(Mid$(LIST$, 6 + I * 4, 4)) Then ListLongSearch~& = I: Exit Function
-    Next I
-    ListLongSearch~& = 0
+    I~& = InStr(6, LIST$, MKL$(ITEM&))
+    If ((I~& - 2) And 3) = 0 Then ListLongSearch~& = _SHR(I~& - 2, 2) Else ListLongSearch~& = 0
 End Function
 Sub ListLongEdit (LIST$, ITEM&, POSITION As _Unsigned Long)
     If Len(LIST$) < 5 Then Exit Sub
     If Asc(LIST$) <> 3 Then Exit Sub
-    If CVL(Mid$(LIST$, 2, 4)) < POSITION - 1 Then Exit Sub
-    LIST$ = Left$(LIST$, 5 + POSITION * 4) + MKL$(ITEM&) + Mid$(LIST$, 6 + POSITION * 4)
+    If CVL(Mid$(LIST$, 2, 4)) < POSITION Then Exit Sub
+    LIST$ = Left$(LIST$, 1 + POSITION * 4) + MKL$(ITEM&) + Mid$(LIST$, 6 + POSITION * 4)
 End Sub

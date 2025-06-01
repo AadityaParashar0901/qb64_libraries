@@ -10,7 +10,7 @@ Function Vec2Length (__V As Vec2) Static
     Vec2Length = Sqr(__V.X * __V.X + __V.Y * __V.Y)
 End Function
 Function Vec2Angle (__V1 As Vec2, __V2 As Vec2) Static
-    Vec2Angle = _Acos(Vec2Dot(__V1, __V2) / Vec2Length(__V1) / Vec2Length(__V2))
+    Vec2Angle = _Atan2(__V2.Y - __V1.Y, __V2.X - __V1.X)
 End Function
 Sub Vec2Add (__V1 As Vec2, __V2 As Vec2) Static
     __V1.X = __V1.X + __V2.X
