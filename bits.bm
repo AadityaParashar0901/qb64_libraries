@@ -1,0 +1,33 @@
+Function ByteToBits$ (__BYTE As _Unsigned _Byte, __MAX_LEN As _Unsigned _Byte)
+    Dim __I As _Unsigned _Byte
+    Dim __O$
+    __O$ = Space$(__MAX_LEN)
+    For __I = 0 To __MAX_LEN - 1
+        If __BYTE And 2 ^ __I Then Asc(__O$, __MAX_LEN - __I) = 49 Else Asc(__O$, __MAX_LEN - __I) = 48
+    Next __I
+    ByteToBits$ = __O$
+End Function
+Function IntegerToBits$ (__A As _Unsigned Integer)
+    Dim __I As _Unsigned _Byte
+    Dim __O$16
+    For __I = 0 To 15
+        If _ReadBit(__A, 15 - __I) Then Asc(__O$16, 1 + __I) = 49 Else Asc(__O$16, 1 + __I) = 48
+    Next __I
+    IntegerToBits$ = __O$16
+End Function
+Function LongToBits$ (__A As _Unsigned Long)
+    Dim __I As _Unsigned _Byte
+    Dim __O$32
+    For __I = 0 To 31
+        If _ReadBit(__A, 31 - __I) Then Asc(__O$32, 1 + __I) = 49 Else Asc(__O$32, 1 + __I) = 48
+    Next __I
+    LongToBits$ = __O$32
+End Function
+Function Integer64ToBits$ (__A As _Unsigned _Integer64)
+    Dim __I As _Unsigned _Byte
+    Dim __O$64
+    For __I = 0 To 63
+        If _ReadBit(__A, 63 - __I) Then Asc(__O$64, 1 + __I) = 49 Else Asc(__O$64, 1 + __I) = 48
+    Next __I
+    Integer64ToBits$ = __O$64
+End Function

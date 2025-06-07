@@ -1,0 +1,6 @@
+Function leftRotateLong~& (A~&, B~%%)
+    leftRotateLong~& = _SHL(A~&, B~%%) Or _SHR(A~&, 32 - B~%%)
+End Function
+Function leftRotateInteger64~& (A~&&, B~%%)
+    leftRotateInteger64~& = _SHL(A~&&, B~%%) Or _SHR(A~&&, 32 - B~%%)
+End Function

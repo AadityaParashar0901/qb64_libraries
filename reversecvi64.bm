@@ -1,0 +1,3 @@
+Function ReverseCVI64~&& (__A$8)
+    ReverseCVI64~&& = Asc(__A$8, 8) Or _SHL(Asc(__A$8, 7), 8) Or _SHL(Asc(__A$8, 6), 16) Or _SHL(Asc(__A$8, 5), 24) Or _SHL(Asc(__A$8, 4), 32) Or _SHL(Asc(__A$8, 3), 40) Or _SHL(Asc(__A$8, 2), 48) Or _SHL(Asc(__A$8, 1), 56)
+End Function

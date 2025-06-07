@@ -1,0 +1,12 @@
+Function PrintSize$ (__T As _Unsigned Long)
+    If __T = 0 Then
+        PrintSize$ = "0 B"
+        Exit Function
+    End If
+    Select Case Int(Log(__T) / Log(2) / 10)
+        Case 0: PrintSize$ = _Trim$(Str$(__T)) + " B"
+        Case 1: PrintSize$ = _Trim$(Str$(Round(__T / _SHL(1, 10)))) + " KB"
+        Case 2: PrintSize$ = _Trim$(Str$(Round(__T / _SHL(1, 20)))) + " MB"
+        Case 3: PrintSize$ = _Trim$(Str$(Round(__T / _SHL(1, 30)))) + " GB"
+    End Select
+End Function
