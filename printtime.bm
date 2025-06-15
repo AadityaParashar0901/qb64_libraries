@@ -5,6 +5,8 @@ Function PrintTime$ (__T As Single)
     __S = __T Mod 60
     If __H Then T$ = _Trim$(Str$(__H)) + "h "
     If __H Or __M Then T$ = T$ + _Trim$(Str$(__M)) + "m "
-    If __T - Int(__T) > 0 Then D$ = _Trim$(Str$(__T - Int(__T))) Else D$ = ""
+    __dT = __T - Int(__T)
+    __dT = Int(100 * __dT) / 100
+    If __dT > 0 Then D$ = _Trim$(Str$(__dT)) Else D$ = ""
     PrintTime$ = T$ + _Trim$(Str$(__S)) + D$ + "s"
 End Function
