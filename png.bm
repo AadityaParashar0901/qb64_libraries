@@ -1,4 +1,3 @@
-'$Include:'string.bm'
 Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     Dim As String __PNGHEADER, __IHDR, __IDAT, __IMAGDATA
     Dim As String __EXT
@@ -107,3 +106,4 @@ Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     If _FileExists(__FILENAME) Then PNG0 = -1 Else PNG0 = 0
 End Function
 '$Include:'crc32.bm'
+'$Include:'reversemkl.bm'
