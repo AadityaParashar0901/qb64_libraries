@@ -30,7 +30,7 @@ For I = 2 To _CommandCount
                         I$ = MKL$(Len(O$)) + O$: O$ = ""
                         Put #2, , I$
                         P = Round(100 * (Seek(1) - 1) / LOF(1))
-                        Locate Y%, 1: Print "[" + String$(P, 45) + Space$(100 - P) + "]"; P; "% "
+                        Locate Y%: Print "[" + String$(P, 45) + Space$(100 - P) + "]"; P; "% "
                         Print " Ratio | Speed | Remaining Time | Elapsed Time | Processed | Compressed Size | Estimated Compressed Size"
                         T$ = _Trim$(Str$(Round(100 * LOF(2) / (Seek(1) - 1)))) + "%"
                         T$ = T$ + Space$(8 - Len(T$)) + PrintSize$((Seek(1) - 1) / (Timer(0.001) - ST!)) + "/s"
@@ -42,8 +42,8 @@ For I = 2 To _CommandCount
                         Print T$ + Space$(98 - Len(T$))
                         If LOF(1) < Seek(1) Then Exit Do
                     Loop
-                    Locate Y%, 1: Print "Ratio: "; Round(100 * LOF(2) / LOF(1)); "% => "; PrintSize$(LOF(1)); " -> "; PrintSize$(LOF(2)); Space$(80)
-                    Print "Time: "; PrintTime$(Timer(0.001) - ST!); Space$(98)
+                    Locate Y%: Print "Ratio: "; Round(100 * LOF(2) / LOF(1)); "% => "; PrintSize$(LOF(1)); " -> "; PrintSize$(LOF(2)); Space$(80)
+                    locate Y% + 1: Print "Time: "; PrintTime$(Timer(0.001) - ST!); Space$(98)
                     Print Space$(100)
                     Locate Y% + 2, 1
                     Close
@@ -82,26 +82,6 @@ End Function
 Function Remain~& (A~&, B~&)
     Remain~& = A~& \ B~& + Sgn(A~& Mod B~&)
 End Function
-Function PrintTime$ (__T As Single)
-    If __T = 0 Then PrintTime$ = "0": Exit Function
-    __H = __T \ 3600
-    __M = (__T Mod 3600) \ 60
-    __S = __T Mod 60
-    If __H Then T$ = _Trim$(Str$(__H)) + "h "
-    If __H Or __M Then T$ = T$ + _Trim$(Str$(__M)) + "m "
-    If __T - Int(__T) > 0 Then D$ = _Trim$(Str$(Round(__T - Int(__T)))) Else D$ = ""
-    PrintTime$ = T$ + _Trim$(Str$(__S)) + D$ + "s"
-End Function
-Function PrintSize$ (__T As Single)
-    If __T = 0 Then
-        PrintSize$ = "0 B"
-        Exit Function
-    End If
-    Select Case Int(Log(__T) / Log(2) / 10)
-        Case 0: PrintSize$ = _Trim$(Str$(__T)) + " B"
-        Case 1: PrintSize$ = _Trim$(Str$(Round(__T / _SHL(1, 10)))) + " KB"
-        Case 2: PrintSize$ = _Trim$(Str$(Round(__T / _SHL(1, 20)))) + " MB"
-        Case 3: PrintSize$ = _Trim$(Str$(Round(__T / _SHL(1, 30)))) + " GB"
-    End Select
-End Function
+'$Include:'printsize.bm'
+'$Include:'printtime.bm'
 '$Include:'min.bm'
