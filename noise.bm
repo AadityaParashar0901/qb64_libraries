@@ -1,8 +1,9 @@
 Sub RePERM (SEED As _Unsigned Integer)
     Randomize SEED
-    For I = 0 To 255
-        For J = 0 To 255
-            For K = 0 To 7
+    For I = 0 To 255: For K = 0 To 7
+            perm1(I, K) = Rnd
+    Next K, I
+    For I = 0 To 255: For J = 0 To 255: For K = 0 To 7
                 perm2(I, J, K) = Rnd
     Next K, J, I
     Randomize SEED
@@ -10,8 +11,27 @@ Sub RePERM (SEED As _Unsigned Integer)
                     perm3(I, J, K, L) = Rnd
     Next L, K, J, I
 End Sub
-Function interpolate! (A!, B!, C!)
-    interpolate! = A! + (B! - A!) * C!
+Function fractal1! (X As Long, S As _Unsigned Long, O As _Unsigned _Byte, M As _Unsigned _Byte) Static
+    Dim As Double amplitude, total, maxAmplitude, scale
+    Dim As Single tX
+    Dim As _Byte i
+    $Checking:Off
+    amplitude = 1: total = 0: maxAmplitude = 0: scale = S
+    For i = 0 To O
+        tX = X / scale
+        fX& = Int(tX)
+        dX~%% = (tX - fX&) * 256
+        fX~%% = fX& And 255
+        fX1~%% = fX~%% + 1
+        i1! = perm1(fX~%%, M)
+        i2! = perm1(fX1~%%, M)
+        total = total + amplitude * (i1! + (i2! - i1!) * fade!(dX~%%))
+        maxAmplitude = maxAmplitude + amplitude
+        amplitude = amplitude / 2
+        scale = scale / 2
+    Next i
+    $Checking:On
+    fractal1! = total / maxAmplitude
 End Function
 Function fractal2! (X As Long, Y As Long, S As _Unsigned Long, O As _Unsigned _Byte, M As _Unsigned _Byte) Static
     Dim As Double amplitude, total, maxAmplitude, scale
