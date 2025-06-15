@@ -1,3 +1,9 @@
+Function rightRotateByte~%% (A~%%, B~%%)
+    rightRotateByte~%% = _SHR(A~%%, B~%%) Or _SHL(A~%%, 8 - B~%%)
+End Function
+Function rightRotateInteger~% (A~%, B~%%)
+    rightRotateInteger~% = _SHR(A~%, B~%%) Or _SHL(A~%, 16 - B~%%)
+End Function
 Function rightRotateLong~& (A~&, B~%%)
     rightRotateLong~& = _SHR(A~&, B~%%) Or _SHL(A~&, 32 - B~%%)
 End Function
