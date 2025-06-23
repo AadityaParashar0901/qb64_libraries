@@ -39,6 +39,13 @@ Sub Vec2Rotate (__V As Vec2, __T As Single) Static
     __TV.Y = __V.X * __ST - __V.Y * __CT
     __V = __TV
 End Sub
+Function Vec2String$ (__V As Vec2) Static
+    Vec2String$ = MKS$(__V.X) + MKS$(__V.Y)
+End Function
+Sub Vec2FromString (__V$, __V As Vec2) Static
+    __V.X = CVS(Left$(__V$, 4))
+    __V.Y = CVS(Right$(__V$, 4))
+End Sub
 Function Vec2Equal (__V1 As Vec2, __V2 As Vec2) Static
     Vec2Equal = (__V1.X = __V2.X) And (__V1.Y = __V2.Y)
 End Function
@@ -102,6 +109,14 @@ Sub Vec3RotateZ (__V As Vec3, __T As Single) Static
     __TV.X = __V.X * -__CT - __V.Y * __ST
     __TV.Y = __V.X * __ST - __V.Y * __CT
     __V = __TV
+End Sub
+Function Vec3String$ (__V As Vec3) Static
+    Vec3String$ = MKS$(__V.X) + MKS$(__V.Y) + MKS$(__V.Z)
+End Function
+Sub Vec3FromString (__V$, __V As Vec3) Static
+    __V.X = CVS(Left$(__V$, 4))
+    __V.Y = CVS(Mid$(__V$, 5, 4))
+    __V.Z = CVS(Right$(__V$, 4))
 End Sub
 Function Vec3Equal (__V1 As Vec3, __V2 As Vec3) Static
     Vec3Equal = (__V1.X = __V2.X) And (__V1.Y = __V2.Y) And (__V1.Z = __V2.Z)
