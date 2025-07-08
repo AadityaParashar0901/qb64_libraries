@@ -1,0 +1,3 @@
+Function MouseInBox (X1, Y1, X2, Y2)
+        MouseInBox = X1 <= _MouseX And _MouseX <= X2 And Y1 <= _MouseY And _MouseY <= Y2
+End Function
