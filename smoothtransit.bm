@@ -1,0 +1,4 @@
+Function SmoothTransit (Initial As Integer, Final As Integer, MaxSpeed As Integer)
+        d% = Final - Initial
+        If Abs(d%) >= MaxSpeed Then SmoothTransit = Initial + Sgn(d%) * MaxSpeed Else SmoothTransit = Final
+End Function
