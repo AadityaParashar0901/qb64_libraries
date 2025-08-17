@@ -7,7 +7,7 @@ Function crc32~& (__IN$) Static
     For __I = 1 To Len(__IN$)
         __CRC = __CRC Xor Asc(__IN$, __I)
         For __J = 1 To 8
-            If __CRC And 1 Then __CRC = (__CRC \ 2) Xor __CRC32_POLY Else __CRC = __CRC \ 2
+            If __CRC And 1 Then __CRC = _SHR(__CRC, 1) Xor __CRC32_POLY Else __CRC = _SHR(__CRC, 1)
         Next __J
     Next __I
     $Checking:On

@@ -1,0 +1,8 @@
+Function RandomString$ (__L~&)
+    __T$ = String$(__L~&, 0)
+    For __I~& = 1 To __L~&
+        Asc(__T$, __I~&) = 33 + Int(Rnd * 94)
+    Next __I~&
+    RandomString$ = __T$
+End Function
+
