@@ -12,25 +12,24 @@ Sub IndexedListAdd (__L$, __ITEM$)
     __L~& = CVL(Mid$(__L$, 2, 4))
     __Hashes$ = Mid$(__L$, 6, _SHL(__L~&, 3))
     __NewHash~& = IndexedListHash~&(__ITEM$)
-    If __L~& = 1 Then
+    If __L~& = 0 Then
+        __P~& = 0
+    ElseIf __L~& = 1 Then
         If CVL(Left$(__Hashes$, 4)) > __NewHash~& Then __P~& = 0 Else __P~& = 1
     Else
-        __P~& = _SHR(__L~&, 1)
-        __S~& = _SHR(__L~&, 2)
-        If __S~& = 0 Then __S~& = 1
-        While 1 >= __P~& And __P~& < __L~&
+        __Low& = 0
+        __High& = __L~& - 1
+        While __Low& <= __High&
+            __P~& = __Low& + _SHR(__High& - __Low&, 1)
             __CurrentHash~& = CVL(Mid$(__Hashes$, _SHL(__P~&, 3) + 1, 4))
-            If __CurrentHash~& = __NewHash~& Then Exit While
-            If __CurrentHash~& > __NewHash~& Then
-                If __P~& > 0 Then If CVL(Mid$(__Hashes$, _SHL(__P~& - 1, 3) + 1, 4)) < __NewHash~& Then Exit While
-                __P~& = __P~& - __S~&
-            Else
-                If __P~& < __L~& - 1 Then
-                    If CVL(Mid$(__Hashes$, _SHL(__P~& + 1, 3) + 1, 4)) > __NewHash~& Then __P~& = __P~& + 1: Exit While
-                End If
-                __P~& = __P~& + __S~&
+            If __Low& = __High& Then
+                If __CurrentHash~& < __NewHash~& Then __P~& = __P~& + 1
+                Exit While
             End If
-            If __S~& > 1 Then __S~& = _SHR(__S~&, 1)
+            If __Low& + 1 = __High& And __CurrentHash~& < __NewHash~& Then __Low& = __Low& + 1: _Continue
+            If __CurrentHash~& = __NewHash~& Then Exit While
+            If __CurrentHash~& > __NewHash~& Then __High& = __P~& - 1: _Continue
+            If __CurrentHash~& < __NewHash~& Then __Low& = __P~&: _Continue
         Wend
     End If
     __Hashes$ = Mid$(__Hashes$, 1, _SHL(__P~&, 3)) + MKL$(__NewHash~&) + MKL$(Len(__L$) - _SHL(__L~&, 3) - 4) + Mid$(__Hashes$, 1 + _SHL(__P~&, 3))
@@ -70,13 +69,13 @@ Function IndexedListBinarySearch~& (__L$, __ITEM$)
     __L~& = CVL(Mid$(__L$, 2, 4))
     __Hashes$ = Mid$(__L$, 6, _SHL(__L~&, 3))
     __NewHash~& = IndexedListHash~&(__ITEM$)
-    __Low~& = 0
-    __High~& = __L~& - 1
-    While __Low~& <= __High~&
-        __P~& = __Low~& + _SHR(__High~& - __Low~&, 1)
+    __Low& = 0
+    __High& = __L~& - 1
+    While __Low& <= __High&
+        __P~& = __Low& + _SHR(__High& - __Low&, 1)
         __CurrentHash~& = CVL(Mid$(__Hashes$, _SHL(__P~&, 3) + 1, 4))
         If __CurrentHash~& = __NewHash~& Then IndexedListBinarySearch~& = __P~& + 1: Exit Function
-        If __CurrentHash~& > __NewHash~& Then __High~& = __P~& - 1 Else __Low~& = __P~& + 1
+        If __CurrentHash~& > __NewHash~& Then __High& = __P~& - 1 Else __Low& = __P~& + 1
     Wend
     IndexedListBinarySearch~& = 0
 End Function
@@ -93,3 +92,17 @@ Function IndexedListHash~& (__I$) 'CRC
     Next __I
     IndexedListHash~& = Not __C
 End Function
+Function IndexedListCheck~%% (__L$)
+    If Len(__L$) < 5 Then Exit Function
+    If Asc(__L$) <> 9 Then Exit Function
+    __L~& = CVL(Mid$(__L$, 2, 4))
+    __Hashes$ = Mid$(__L$, 6, _SHL(__L~&, 3))
+    __LastHash~& = 0
+    For __I~& = 1 To __L~&
+        __Hash~& = CVL(Mid$(__Hashes$, _SHL(__I~& - 1, 3) + 1, 4))
+        If __LastHash~& > __Hash~& Then IndexedListCheck~%% = __I~&: Exit Function
+        __LastHash~& = __Hash~&
+    Next __I~&
+    IndexedListCheck~%% = 0
+End Function
+
