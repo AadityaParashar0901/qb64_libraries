@@ -27,11 +27,12 @@ Sub IndexedListAdd (__L$, __ITEM$)
                 Exit While
             End If
             If __Low& + 1 = __High& And __CurrentHash~& < __NewHash~& Then __Low& = __Low& + 1: _Continue
-            If __CurrentHash~& = __NewHash~& Then Exit While
+            If __CurrentHash~& = __NewHash~& Then Exit Sub
             If __CurrentHash~& > __NewHash~& Then __High& = __P~& - 1: _Continue
             If __CurrentHash~& < __NewHash~& Then __Low& = __P~&: _Continue
         Wend
     End If
+    If __P~& < __L~& Then If CVL(Mid$(__Hashes$, _SHL(__P~&, 3) + 1, 4)) = __NewHash~& Then Exit Sub
     __Hashes$ = Mid$(__Hashes$, 1, _SHL(__P~&, 3)) + MKL$(__NewHash~&) + MKL$(Len(__L$) - _SHL(__L~&, 3) - 4) + Mid$(__Hashes$, 1 + _SHL(__P~&, 3))
     __L$ = Chr$(9) + MKL$(__L~& + 1) + __Hashes$ + Mid$(__L$, 6 + _SHL(__L~&, 3)) + MKL$(Len(__ITEM$)) + __ITEM$
 End Sub
