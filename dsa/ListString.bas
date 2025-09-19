@@ -51,6 +51,7 @@ Function ListStringPrint$ (LIST$)
     Dim As Long O, T_OFFSET, I, L
     If Len(LIST$) < 5 Then Exit Function
     If Asc(LIST$) <> 1 Then Exit Function
+    If CVL(Mid$(LIST$, 2, 4)) = 0 Then ListStringPrint$ = "[]": Exit Function
     O = 6: T_OFFSET = 2
     T$ = String$(Len(LIST$) - 4, 0)
     Asc(T$) = 91 '[
