@@ -80,6 +80,27 @@ Function IndexedListBinarySearch~& (__L$, __ITEM$)
     Wend
     IndexedListBinarySearch~& = 0
 End Function
+Sub IndexedListRemove (__L$, __ITEM$)
+    If Len(__L$) < 5 Then Exit Sub
+    If Asc(__L$) <> 9 Then Exit Sub
+    __L~& = CVL(Mid$(__L$, 2, 4)): If __L~& = 0 Then Exit Sub
+    __Hashes$ = Mid$(__L$, 6, _SHL(__L~&, 3))
+    __NewHash~& = IndexedListHash~&(__ITEM$)
+    __Low& = 0
+    __High& = __L~& - 1
+    While __Low& <= __High&
+        __P~& = __Low& + _SHR(__High& - __Low&, 1)
+        __CurrentHash~& = CVL(Mid$(__Hashes$, _SHL(__P~&, 3) + 1, 4))
+        If __CurrentHash~& = __NewHash~& Then
+            __Position~& = CVL(Mid$(__Hashes$, _SHL(__P~&, 3) + 5, 4))
+            If 5 + _SHL(__L~&, 3) + __Position~& > Len(__L$) Then Exit Sub
+            __Length~& = CVL(Mid$(__L$, 5 + _SHL(__L~&, 3) + __Position~&, 4))
+            __L$ = Chr$(9) + MKL$(__L~& - 1) + Left$(__Hashes$, _SHL(__P~&, 3)) + Mid$(__Hashes$, _SHL(__P~&, 3) + 9) + Mid$(__L$, 6 + _SHL(__L~&, 3), __Position~& - 1) + Mid$(__L$, 9 + _SHL(__L~&, 3) + __Position~& + __Length~&)
+            Exit Sub
+        End If
+        If __CurrentHash~& > __NewHash~& Then __High& = __P~& - 1 Else __Low& = __P~& + 1
+    Wend
+End Sub
 Function IndexedListHash~& (__I$) 'CRC
     Dim As _Unsigned Long __P, __C, __I
     Dim As _Unsigned _Byte __J
@@ -106,4 +127,3 @@ Function IndexedListCheck~%% (__L$)
     Next __I~&
     IndexedListCheck~%% = 0
 End Function
-
