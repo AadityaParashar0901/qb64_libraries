@@ -1,4 +1,4 @@
-Function SHA512$128 (I$)
+Function SHA512$64 (I$)
     Dim As _Unsigned _Integer64 I, Part, Message_Parts, Parts, Message_Length
     Dim As _Unsigned _Integer64 h(0 To 7), a, b, c, d, e, f, g, h, w(0 To 79), s0, s1, ch, temp1, temp2, maj
     Static As _Unsigned _Integer64 k(0 To 79)
@@ -72,11 +72,11 @@ Function SHA512$128 (I$)
         h(6) = h(6) + g
         h(7) = h(7) + h
     Next Part
-    digest$ = String$(128, 0)
+    digest$ = String$(64, 0)
     For I = 0 To 7
-        Mid$(digest$, I * 16 + 1, 16) = Integer64ToHex$(h(I))
+        Mid$(digest$, I * 8 + 1, 8) = _MK$(_Integer64, h(I))
     Next I
-    SHA512$128 = digest$
+    SHA512$64 = digest$
     Exit Function
     SHA512_RoundConstants:
     Data &H428a2f98d728ae22,&H7137449123ef65cd,&Hb5c0fbcfec4d3b2f,&He9b5dba58189dbbc,&H3956c25bf348b538,&H59f111f1b605d019,&H923f82a4af194f9b,&Hab1c5ed5da6d8118
@@ -90,7 +90,7 @@ Function SHA512$128 (I$)
     Data &Hca273eceea26619c,&Hd186b8c721c0c207,&Heada7dd6cde0eb1e,&Hf57d4f7fee6ed178,&H06f067aa72176fba,&H0a637dc5a2c898a6,&H113f9804bef90dae,&H1b710b35131c471b
     Data &H28db77f523047d84,&H32caab7b40c72493,&H3c9ebe0a15c9bebc,&H431d67c49c100d4c,&H4cc5d4becb3e42b6,&H597f299cfc657e2a,&H5fcb6fab3ad6faec,&H6c44198c4a475817
 End Function
-Function SHA384$96 (I$)
+Function SHA384$48 (I$)
     Dim As _Unsigned _Integer64 I, Part, Message_Parts, Parts, Message_Length
     Dim As _Unsigned _Integer64 h(0 To 7), a, b, c, d, e, f, g, h, w(0 To 79), s0, s1, ch, temp1, temp2, maj
     Static As _Unsigned _Integer64 k(0 To 79)
@@ -164,13 +164,13 @@ Function SHA384$96 (I$)
         h(6) = h(6) + g
         h(7) = h(7) + h
     Next Part
-    digest$ = String$(96, 0)
+    digest$ = String$(48, 0)
     For I = 0 To 5
-        Mid$(digest$, I * 16 + 1, 16) = Integer64ToHex$(h(I))
+        Mid$(digest$, I * 8 + 1, 8) = _MK$(_Integer64, h(I))
     Next I
-    SHA384$96 = digest$
+    SHA384$48 = digest$
 End Function
-Function SHA512_224$56 (I$)
+Function SHA512_224$28 (I$)
     Dim As _Unsigned _Integer64 I, Part, Message_Parts, Parts, Message_Length
     Dim As _Unsigned _Integer64 h(0 To 7), a, b, c, d, e, f, g, h, w(0 To 79), s0, s1, ch, temp1, temp2, maj
     Static As _Unsigned _Integer64 k(0 To 79)
@@ -244,13 +244,13 @@ Function SHA512_224$56 (I$)
         h(6) = h(6) + g
         h(7) = h(7) + h
     Next Part
-    digest$ = String$(56, 0)
+    digest$ = String$(28, 0)
     For I = 0 To 3
-        Mid$(digest$, I * 16 + 1, 16) = Integer64ToHex$(h(I))
+        Mid$(digest$, I * 8 + 1, 8) = _MK$(_Integer64, h(I))
     Next I
-    SHA512_224$56 = digest$
+    SHA512_224$28 = digest$
 End Function
-Function SHA512_256$64 (I$)
+Function SHA512_256$32 (I$)
     Dim As _Unsigned _Integer64 I, Part, Message_Parts, Parts, Message_Length
     Dim As _Unsigned _Integer64 h(0 To 7), a, b, c, d, e, f, g, h, w(0 To 79), s0, s1, ch, temp1, temp2, maj
     Static As _Unsigned _Integer64 k(0 To 79)
@@ -324,11 +324,11 @@ Function SHA512_256$64 (I$)
         h(6) = h(6) + g
         h(7) = h(7) + h
     Next Part
-    digest$ = String$(64, 0)
+    digest$ = String$(32, 0)
     For I = 0 To 3
-        Mid$(digest$, I * 16 + 1, 16) = Integer64ToHex$(h(I))
+        Mid$(digest$, I * 8 + 1, 8) = _MK$(_Integer64, h(I))
     Next I
-    SHA512_256$64 = digest$
+    SHA512_256$32 = digest$
 End Function
 '$Include:'include\rightRotate.bm'
 '$Include:'include\hex.bm'

@@ -1,4 +1,4 @@
-Function SHA1$40 (I$)
+Function SHA1$20 (I$)
     Dim As _Unsigned Long I, Part, Message_Parts, Parts, Message_Length
     Dim As _Unsigned Long k, h(0 To 4), a, b, c, d, e, f, w(0 To 79), temp
     h(0) = &H67452301
@@ -63,11 +63,11 @@ Function SHA1$40 (I$)
         h(3) = h(3) + d
         h(4) = h(4) + e
     Next Part
-    digest$ = String$(40, 0)
+    digest$ = String$(20, 0)
     For I = 0 To 4
-        Mid$(digest$, I * 8 + 1, 8) = LongToHex$(h(I))
+        Mid$(digest$, I * 4 + 1, 4) = MKL$(h(I))
     Next I
-    SHA1$40 = digest$
+    SHA1$20 = digest$
 End Function
 '$Include:'include\leftRotate.bm'
 '$Include:'include\rightRotate.bm'
