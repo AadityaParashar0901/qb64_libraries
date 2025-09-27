@@ -11,13 +11,14 @@ Function Reverse$ (__IN$)
     $Checking:On
     Reverse$ = ___IN$
 End Function
-Function Replace$ (__IN$, __A$, __B$)
+Function Replace$ (__IN$, __A$, __B$) Static
     Static As _Unsigned Long __P, __LA
     IN$ = __IN$
     Do
         __P = InStr(IN$, __A$)
-        IN$ = Left$(IN$, P - 1) + __B$ + Mid$(IN$, P + __LA~& + 1)
-    Loop While P
+        If __P = 0 Then Exit Do
+        IN$ = Left$(IN$, __P - 1) + __B$ + Mid$(IN$, __P + __LA + 1)
+    Loop
     Replace$ = IN$
     IN$ = ""
 End Function
