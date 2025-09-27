@@ -58,6 +58,14 @@ Function ResizeBitPack$ (__IMAGE$, __SCALE_X!, __SCALE_Y!)
     ResizeBitPack$ = CreateBitPack$(__IMAGE&)
     _FreeImage __IMAGE&
 End Function
+Function BitPackGetWidth% (__IMAGE$) Static
+    If Left$(__IMAGE$, 2) <> "BP" Or Len(__IMAGE$) < 6 Then Exit Function
+    BitPackGetWidth = CVI(Mid$(__IMAGE$, 3, 2))
+End Function
+Function BitPackGetHeight% (__IMAGE$) Static
+    If Left$(__IMAGE$, 2) <> "BP" Or Len(__IMAGE$) < 6 Then Exit Function
+    BitPackGetHeight = CVI(Mid$(__IMAGE$, 5, 2))
+End Function
 Sub DrawBitPack (__IMAGE$, __OX%, __OY%, __COLOR&)
     If Left$(__IMAGE$, 2) <> "BP" Or Len(__IMAGE$) < 6 Then Exit Sub
     __WIDTH% = CVI(Mid$(__IMAGE$, 3, 2))
