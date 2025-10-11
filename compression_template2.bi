@@ -26,7 +26,7 @@ For I = 2 To _CommandCount
                     Open INFILE$ + FILE_EXT$ For Binary As #2
                     ST! = Timer(0.001): Do: LT! = Timer(0.001)
                         I$ = String$(Min(LOF(1) - Seek(1) + 1, BLOCK_SIZE), 0)
-                        Get #1, , I$: O$ = Compress$(I$)
+                        Get #1, , I$: Compress I$, O$
                         I$ = MKL$(Len(O$)) + O$: O$ = ""
                         Put #2, , I$
                         P = Round(100 * (Seek(1) - 1) / LOF(1))
@@ -59,7 +59,7 @@ For I = 2 To _CommandCount
                         If EOF(1) Then Exit Do
                         I$ = String$(L&, 0)
                         Get #1, , I$
-                        O$ = Decompress$(I$)
+                        Decompress I$, O$
                         Put #2, , O$
                         P = Round(100 * (Seek(1) - 1) / LOF(1))
                         Locate Y%, 1: Print "[" + String$(P, 45) + Space$(100 - P) + "]"; P; "% "
@@ -76,7 +76,9 @@ For I = 2 To _CommandCount
     End Select
 Next I
 System
-'$Include:'round.bm'
+Function Round (__N As Double)
+    Round = Int(100 * __N) / 100
+End Function
 Function Remain~& (A~&, B~&)
     Remain~& = A~& \ B~& + Sgn(A~& Mod B~&)
 End Function
