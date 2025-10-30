@@ -1,0 +1,4 @@
+Function ChangeFileExtension$ (F$, E$)
+    P~& = _InStrRev(F$, ".")
+    If P~& = 0 Then ChangeFileExtension$ = F$ + E$ Else ChangeFileExtension$ = Left$(F$, P~& - 1) + E$
+End Function
