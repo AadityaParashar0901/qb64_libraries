@@ -1,0 +1,10 @@
+Sub PutBitBuffer (B$, B_OFFSET As _Unsigned Long, BitBuffer As _Unsigned _Integer64, BitBufferSize As _Unsigned _Byte, J As _Unsigned _Byte)
+    While BitBufferSize
+        B_OFFSET = B_OFFSET - (J = 0)
+        If Len(B$) < B_OFFSET + 8 Then B$ = B$ + String$(65536, 0) ' Increase Size of Output Buffer if needed
+        If _ReadBit(BitBuffer, BitBufferSize) Then Asc(B$, B_OFFSET) = _SetBit(Asc(B$, B_OFFSET), J)
+        J = J + 1
+        If J = 8 Then J = 0
+        BitBufferSize = BitBufferSize - 1
+    Wend
+End Sub
