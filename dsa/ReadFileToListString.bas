@@ -1,4 +1,5 @@
 Sub ReadFileToListString (File$, OutputList$)
+    Dim As _Unsigned Long I, OldI
     __F = FreeFile
     Open File$ For Binary As #__F
     F$ = String$(LOF(__F), 0)
