@@ -1,0 +1,9 @@
+Function ReverseBits~%% (B~%%, N~%%) Static
+    Dim T~%%, I~%%: T~%% = 0: I~%% = 0
+    While I~%% < N~%%
+        T~%% = _SHL(T~%%, 1)
+        If _ReadBit(B~%%, I~%%) Then T~%% = T~%% Or 1
+        I~%% = I~%% + 1
+    Wend
+    ReverseBits~%% = T~%%
+End Function
