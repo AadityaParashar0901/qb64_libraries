@@ -1,3 +1,5 @@
+Dim Shared As String LogFile: LogFile = ""
+Dim Shared INFILE$, OUTFILE$
 Dim Shared As _Unsigned Long BLOCK_SIZE: BLOCK_SIZE = 1048576
 Dim Shared As _Unsigned _Byte RAW_MODE: RAW_MODE = 0
 Select Case Command$(1)
@@ -21,9 +23,11 @@ For I = 2 To _CommandCount
             Y% = CsrLin + 1
             Select Case COMMAND
                 Case 1
-                    Print "Compressing "; INFILE$; " -> "; INFILE$ + FILE_EXT$
-                    Open INFILE$ + FILE_EXT$ For Output As #2: Close #2
-                    Open INFILE$ + FILE_EXT$ For Binary As #2
+                    OUTFILE$ = INFILE$ + FILE_EXT$
+                    Print "Compressing "; INFILE$; " -> "; OUTFILE$
+                    Open OUTFILE$ For Output As #2: Close #2
+                    Open OUTFILE$ For Binary As #2
+                    Clear_Log
                     ST! = Timer(0.001): Do: LT! = Timer(0.001)
                         I$ = String$(Min(LOF(1) - Seek(1) + 1, BLOCK_SIZE), 0)
                         Get #1, , I$: Compress I$, O$
@@ -42,8 +46,9 @@ For I = 2 To _CommandCount
                         Print T$ + Space$(98 - Len(T$))
                         If LOF(1) < Seek(1) Then Exit Do
                     Loop
+                    Put_Log
                     Locate Y%: Print "Ratio: "; Round(100 * LOF(2) / LOF(1)); "% => "; PrintSize$(LOF(1)); " -> "; PrintSize$(LOF(2)); Space$(80)
-                    locate Y% + 1: Print "Time: "; PrintTime$(Timer(0.001) - ST!); Space$(98)
+                    Locate Y% + 1: Print "Time: "; PrintTime$(Timer(0.001) - ST!); Space$(98)
                     Print Space$(100)
                     Locate Y% + 2, 1
                     Close
@@ -53,6 +58,7 @@ For I = 2 To _CommandCount
                     Print "Decompressing "; INFILE$; " -> "; OUTFILE$
                     Open OUTFILE$ For Output As #2: Close #2
                     Open OUTFILE$ For Binary As #2
+                    Clear_Log
                     ST! = Timer(0.001): Do: LT! = Timer(0.001)
                         I$ = String$(Min(LOF(1) - Seek(1) + 1, BLOCK_SIZE), 0)
                         Get #1, , L&
@@ -69,6 +75,7 @@ For I = 2 To _CommandCount
                         T$ = T$ + Space$(22 - Len(T$))
                         Print T$
                     Loop
+                    Put_Log
                     Locate Y%, 1: Print "Time: "; PrintTime$(Timer(0.001) - ST!); Space$(80): Print
                     Locate Y% + 1, 1
                     Close
@@ -85,3 +92,19 @@ End Function
 '$Include:'printsize.bm'
 '$Include:'printtime.bm'
 '$Include:'min.bm'
+Sub Clear_Log
+    If _FileExists(OUTFILE$ + ".log.txt") Then Kill OUTFILE$ + ".log.txt"
+End Sub
+Sub Write_Log (T$)
+    LogFile = LogFile + T$ + Chr$(10)
+    If Len(LogFile) >= 65536 Then
+        Put_Log
+    End If
+End Sub
+Sub Put_Log
+    If Len(LogFile) = 0 Then Exit Sub
+    Open OUTFILE$ + ".log.txt" For Append As #100
+    Print #100, LogFile;
+    Close #100
+    LogFile = ""
+End Sub
