@@ -1,0 +1,8 @@
+Function MinBitsUsed (V As _Unsigned Long) Static
+    Static As _Unsigned Long __V, __MBU: __V = V: __MBU = 0
+    While __V
+        __V = _SHR(__V, 1)
+        __MBU = __MBU + 1
+    Wend
+    MinBitsUsed = __MBU
+End Function
