@@ -1,0 +1,54 @@
+Sub GenerateHuffmanTable (Freq() As _Unsigned Long, CodeTable() As _Unsigned Long, CodeLengthTable() As _Unsigned _Byte)
+    Type HuffmanTree
+        As _Unsigned Long Left, Right
+        As _Unsigned Long Freq
+        As _Unsigned Integer Value
+    End Type
+    Dim Tree(0 To 1024) As HuffmanTree
+    Dim As _Unsigned Long NTP, Min1, Min1Freq, Min2, Min2Freq, TotalNodes
+    For I = LBound(Freq) To UBound(Freq)
+        If Freq(I) = 0 Then _Continue
+        Tree(NTP).Left = -1
+        Tree(NTP).Right = -1
+        Tree(NTP).Freq = Freq(I)
+        Tree(NTP).Value = I
+        NTP = NTP + 1
+        If NTP > UBound(Tree) Then ReDim _Preserve Tree(0 To UBound(Tree) + 1024) As HuffmanTree
+    Next I
+    TotalNodes = NTP
+    If TotalNodes = 1 Then
+        CodeTable(Tree(0).Value) = 0
+        CodeLengthTable(Tree(0).Value) = 1
+        Exit Sub
+    End If
+    While TotalNodes > 1
+        Min1 = 0: Min1Freq = -1: Min2 = 0: Min2Freq = -1
+        I = 0: While I <= UBound(Tree): If Tree(I).Freq Then
+                If Min1Freq > Tree(I).Freq And Min2Freq > Tree(I).Freq Then
+                    Min1Freq = Min2Freq
+                    Min1 = Min2
+                    Min2Freq = Tree(I).Freq
+                    Min2 = I
+                ElseIf Min1Freq > Tree(I).Freq Then
+                    Min1Freq = Tree(I).Freq
+                    Min1 = I
+        End If: End If: I = I + 1: Wend
+        Tree(Min1).Freq = 0: Tree(Min2).Freq = 0
+        Tree(NTP).Left = Min2
+        Tree(NTP).Right = Min1
+        Tree(NTP).Freq = Min1Freq + Min2Freq
+        Tree(NTP).Value = 0
+        NTP = NTP + 1
+        If NTP > UBound(Tree) Then ReDim _Preserve Tree(0 To UBound(Tree) + 1024) As HuffmanTree
+        TotalNodes = TotalNodes - 1
+    Wend
+    HuffmanTreeTraverse Tree(), NTP - 1, 0, 0, CodeTable(), CodeLengthTable()
+End Sub
+Sub HuffmanTreeTraverse (Tree() As HuffmanTree, CurrentNode As _Unsigned Long, CurrentCode As _Unsigned Long, CurrentCodeLength As _Unsigned _Byte, CodeTable() As _Unsigned Long, CodeLengthTable() As _Unsigned _Byte)
+    If Tree(CurrentNode).Left = -1 And Tree(CurrentNode).Right = -1 Then
+        CodeTable(Tree(CurrentNode).Value) = CurrentCode
+        CodeLengthTable(Tree(CurrentNode).Value) = CurrentCodeLength
+    Else
+        HuffmanTreeTraverse Tree(), Tree(CurrentNode).Left, _SHL(CurrentCode, 1), CurrentCodeLength + 1, CodeTable(), CodeLengthTable()
+        HuffmanTreeTraverse Tree(), Tree(CurrentNode).Right, _SHL(CurrentCode, 1) Or 1, CurrentCodeLength + 1, CodeTable(), CodeLengthTable()
+End If: End Sub
