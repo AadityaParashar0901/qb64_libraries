@@ -70,8 +70,4 @@ Function SHA1$20 (I$)
     SHA1$20 = digest$
 End Function
 '$Include:'include\leftRotate.bm'
-'$Include:'include\rightRotate.bm'
-'$Include:'include\hex.bm'
-'$Include:'include\bits.bm'
 '$Include:'include\reversecvl.bm'
-'$Include:'include\printtime.bm'

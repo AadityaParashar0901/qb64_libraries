@@ -48,10 +48,10 @@ Function SHA512$64 (I$)
         a = h(0): b = h(1): c = h(2): d = h(3): e = h(4): f = h(5): g = h(6): h = h(7)
         For I = 0 To 79
             s1 = rightRotateInteger64(e, 14) Xor rightRotateInteger64(e, 18) Xor rightRotateInteger64(e, 41)
-            ch = g Xor (e And (f Xor g)) '(e And f) Xor ((Not e) And g)
+            ch = g Xor (e And (f Xor g))
             temp1 = h + s1 + ch + k(I) + w(I)
             s0 = rightRotateInteger64(a, 28) Xor rightRotateInteger64(a, 34) Xor rightRotateInteger64(a, 39)
-            maj = ((a Or b) And c) Or (a And b) '(a And b) Xor (a And c) Xor (b And c)
+            maj = ((a Or b) And c) Or (a And b)
             temp2 = s0 + maj
             h = g
             g = f
@@ -140,10 +140,10 @@ Function SHA384$48 (I$)
         a = h(0): b = h(1): c = h(2): d = h(3): e = h(4): f = h(5): g = h(6): h = h(7)
         For I = 0 To 79
             s1 = rightRotateInteger64(e, 14) Xor rightRotateInteger64(e, 18) Xor rightRotateInteger64(e, 41)
-            ch = g Xor (e And (f Xor g)) '(e And f) Xor ((Not e) And g)
+            ch = g Xor (e And (f Xor g))
             temp1 = h + s1 + ch + k(I) + w(I)
             s0 = rightRotateInteger64(a, 28) Xor rightRotateInteger64(a, 34) Xor rightRotateInteger64(a, 39)
-            maj = ((a Or b) And c) Or (a And b) '(a And b) Xor (a And c) Xor (b And c)
+            maj = ((a Or b) And c) Or (a And b)
             temp2 = s0 + maj
             h = g
             g = f
@@ -220,10 +220,10 @@ Function SHA512_224$28 (I$)
         a = h(0): b = h(1): c = h(2): d = h(3): e = h(4): f = h(5): g = h(6): h = h(7)
         For I = 0 To 79
             s1 = rightRotateInteger64(e, 14) Xor rightRotateInteger64(e, 18) Xor rightRotateInteger64(e, 41)
-            ch = g Xor (e And (f Xor g)) '(e And f) Xor ((Not e) And g)
+            ch = g Xor (e And (f Xor g))
             temp1 = h + s1 + ch + k(I) + w(I)
             s0 = rightRotateInteger64(a, 28) Xor rightRotateInteger64(a, 34) Xor rightRotateInteger64(a, 39)
-            maj = ((a Or b) And c) Or (a And b) '(a And b) Xor (a And c) Xor (b And c)
+            maj = ((a Or b) And c) Or (a And b)
             temp2 = s0 + maj
             h = g
             g = f
@@ -300,10 +300,10 @@ Function SHA512_256$32 (I$)
         a = h(0): b = h(1): c = h(2): d = h(3): e = h(4): f = h(5): g = h(6): h = h(7)
         For I = 0 To 79
             s1 = rightRotateInteger64(e, 14) Xor rightRotateInteger64(e, 18) Xor rightRotateInteger64(e, 41)
-            ch = g Xor (e And (f Xor g)) '(e And f) Xor ((Not e) And g)
+            ch = g Xor (e And (f Xor g))
             temp1 = h + s1 + ch + k(I) + w(I)
             s0 = rightRotateInteger64(a, 28) Xor rightRotateInteger64(a, 34) Xor rightRotateInteger64(a, 39)
-            maj = ((a Or b) And c) Or (a And b) '(a And b) Xor (a And c) Xor (b And c)
+            maj = ((a Or b) And c) Or (a And b)
             temp2 = s0 + maj
             h = g
             g = f
@@ -331,7 +331,4 @@ Function SHA512_256$32 (I$)
     SHA512_256$32 = digest$
 End Function
 '$Include:'include\rightRotate.bm'
-'$Include:'include\hex.bm'
-'$Include:'include\bits.bm'
 '$Include:'include\reversecvi64.bm'
-'$Include:'include\printtime.bm'
