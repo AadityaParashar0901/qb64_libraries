@@ -1,6 +1,22 @@
 Function MapNew$
     MapNew$ = Chr$(8) + MKL$(0)
 End Function
+Function MapExistsKey%% (__MAP$, __KEY$)
+    If Len(__MAP$) < 5 Then Exit Function
+    If Asc(__MAP$, 1) <> 8 Then Exit Function
+    Dim __LENGTH~&, __OFFSET~&
+    __LENGTH~& = CVL(Mid$(__MAP$, 2, 4))
+    __OFFSET~& = 6
+    Dim __LEN_KEY~&, __LEN_VALUE~&
+    For __I~& = 1 To __LENGTH~& 'check if exists
+        __LEN_KEY~& = CVL(Mid$(__MAP$, __OFFSET~&, 4))
+        __LEN_VALUE~& = CVL(Mid$(__MAP$, __OFFSET~& + 4, 4))
+        __K$ = Mid$(__MAP$, __OFFSET~& + 8, __LEN_KEY~&)
+        __V$ = Mid$(__MAP$, __OFFSET~& + 8 + __LEN_KEY~&, __LEN_VALUE~&)
+        If __KEY$ = __K$ Then MapExistsKey%% = -1: Exit Function
+        __OFFSET~& = __OFFSET~& + 8 + __LEN_KEY~& + __LEN_VALUE~&
+    Next __I~&
+End Function
 Sub MapSetKey (__MAP$, __KEY$, __VALUE$)
     If Len(__MAP$) < 5 Then Exit Sub
     If Asc(__MAP$, 1) <> 8 Then Exit Sub
