@@ -154,3 +154,25 @@ Function ListStringAppend$ (LIST1$, LIST2$)
     If Asc(LIST2$) <> 1 Then Exit Function
     ListStringAppend$ = Chr$(1) + MKL$(CVL(Mid$(LIST1$, 2, 4)) + CVL(Mid$(LIST2$, 2, 4))) + Mid$(LIST1$, 6) + Mid$(LIST2$, 6)
 End Function
+Function ListStringBisect$ (LIST$, START_POSITION As _Unsigned Long, END_POSITION As _Unsigned Long)
+    Dim As Long O, I, L, __O
+    If Len(LIST$) < 5 Then Exit Function
+    If Asc(LIST$) <> 1 Then Exit Function
+    O = 6
+    For I = 1 To START_POSITION - 1
+        L = CVL(Mid$(LIST$, O, 4))
+        O = O + L + 4
+    Next I
+    OutputList$ = Chr$(1) + MKL$(END_POSITION - START_POSITION + 1) + String$(16379, 0)
+    __O = 6
+    For I = START_POSITION To END_POSITION
+        L = CVL(Mid$(LIST$, O, 4))
+        If __O + L < Len(OutputList$) Then OutputList$ = OutputList$ + String$(16384, 0)
+        Mid$(OutputList$, __O, L) = Mid$(LIST$, O + 4, L)
+        __O = __O + L
+        O = O + L + 4
+        If O > Len(LIST$) Then Exit For
+    Next I
+    ListStringBisect$ = Left$(OutputList$, __O)
+    OutputList$ = ""
+End Function
