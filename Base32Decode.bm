@@ -1,0 +1,19 @@
+Function Base32Decode$ (__I$)
+    Dim As _Unsigned _Byte B, BitBufferSize, J
+    Dim As _Unsigned Long O_OFFSET
+    Dim As _Unsigned _Integer64 BitBuffer
+    O$ = ""
+    B32$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+    __I2$ = UCase$(__I$)
+    For I = 1 To Len(__I2$)
+        B = Asc(__I2$, I)
+        If B = 61 Then Exit For
+        B = InStr(B32$, Chr$(B))
+        If B = 0 Then Exit For
+        BitBuffer = _ShL(BitBuffer, 5) Or (B - 1)
+        BitBufferSize = BitBufferSize + 5
+        PutBitBuffer O$, O_OFFSET, BitBuffer, BitBufferSize, J
+    Next I
+    Base32Decode$ = Left$(O$, O_OFFSET)
+End Function
+'$Include:'PutBitBufferMSB.bm'
