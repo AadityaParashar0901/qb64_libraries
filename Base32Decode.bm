@@ -10,10 +10,9 @@ Function Base32Decode$ (__I$)
         If B = 61 Then Exit For
         B = InStr(B32$, Chr$(B))
         If B = 0 Then Exit For
-        BitBuffer = _ShL(BitBuffer, 5) Or (B - 1)
+        BitBuffer = _SHL(BitBuffer, 5) Or (B - 1)
         BitBufferSize = BitBufferSize + 5
         PutBitBuffer O$, O_OFFSET, BitBuffer, BitBufferSize, J
     Next I
     Base32Decode$ = Left$(O$, O_OFFSET)
 End Function
-'$Include:'PutBitBufferMSB.bm'

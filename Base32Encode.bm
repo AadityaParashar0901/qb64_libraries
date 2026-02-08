@@ -14,4 +14,3 @@ Function Base32Encode$ (__I$)
     O$ = Left$(O$, O_OFFSET)
     Base32Encode$ = O$ + String$(Len(O$) Mod 8, 61)
 End Function
-'$Include:'ReadBitBufferMSB.bm'

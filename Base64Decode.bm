@@ -15,4 +15,3 @@ Function Base64Decode$ (__I$)
     Next I
     Base64Decode$ = Left$(O$, O_OFFSET)
 End Function
-'$Include:'PutBitBufferMSB.bm'
