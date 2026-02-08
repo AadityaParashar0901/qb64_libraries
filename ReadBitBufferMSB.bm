@@ -1,0 +1,17 @@
+Function ReadBitBufferMSB~&& (B$, B_OFFSET As _Unsigned Long, Bits As _Unsigned _Byte, J As _Unsigned _Byte)
+    Dim BitBuffer As _Unsigned _Integer64
+    BitBuffer = 0
+    While Bits
+        B_OFFSET = B_OFFSET - (J = 0)
+        If B_OFFSET > Len(B$) Then
+            Bits = 0
+            Exit Function
+        End If
+        Bits = Bits - 1
+        BitBuffer = _ShL(BitBuffer, 1)
+        If _ReadBit(Asc(B$, B_OFFSET), 7 - J) Then BitBuffer = BitBuffer Or 1
+        J = J + 1
+        If J = 8 Then J = 0
+    Wend
+    ReadBitBufferMSB = BitBuffer
+End Function
