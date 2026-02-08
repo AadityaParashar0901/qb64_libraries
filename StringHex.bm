@@ -1,0 +1,11 @@
+Function StringHex$ (__T$) Static
+    Static __O$, __Hex$, __I~&, __B~%%
+    __O$ = String$(_ShL(Len(__T$), 1), 0)
+    __Hex$ = "0123456789ABCDEF"
+    For __I~& = 1 To Len(__T$)
+        __B~%% = Asc(__T$, __I~&)
+        Asc(__O$, _ShL(__I~&, 1) - 1) = Asc(__Hex$, _ShR(__B~%%, 4) + 1)
+        Asc(__O$, _ShL(__I~&, 1)) = Asc(__Hex$, (__B~%% And 15) + 1)
+    Next __I~&
+    StringHex$ = __O$
+End Function
