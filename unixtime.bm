@@ -1,0 +1,34 @@
+Function UnixTime~&& ()
+    ' --- parse date ---
+    M& = Val(Left$(Date$, 2))
+    D& = Val(Mid$(Date$, 4, 2))
+    Y& = Val(Right$(Date$, 4))
+
+    ' --- parse time ---
+    hh& = Val(Left$(Time$, 2))
+    mm& = Val(Mid$(Time$, 4, 2))
+    ss& = Val(Right$(Time$, 2))
+
+    ' --- days since 1970 ---
+    days~&& = 0
+    For y2& = 1970 To Y& - 1
+        days~&& = days~&& + 365
+        If (y2& Mod 4 = 0 And y2& Mod 100 <> 0) Or (y2& Mod 400 = 0) Then days~&& = days~&& + 1
+    Next
+
+    ' --- days before this month ---
+    Static dm(12) As Long
+    dm(1) = 0: dm(2) = 31: dm(3) = 59: dm(4) = 90
+    dm(5) = 120: dm(6) = 151: dm(7) = 181: dm(8) = 212
+    dm(9) = 243: dm(10) = 273: dm(11) = 304: dm(12) = 334
+
+    days~&& = days~&& + dm(M&)
+    If M& > 2 Then
+        If (Y& Mod 4 = 0 And Y& Mod 100 <> 0) Or (Y& Mod 400 = 0) Then days~&& = days~&& + 1
+    End If
+
+    days~&& = days~&& + (D& - 1)
+
+    ' --- convert to seconds ---
+    UnixTime~&& = days~&& * 86400~&& + hh& * 3600~&& + mm& * 60~&& + ss& - 19800
+End Function
