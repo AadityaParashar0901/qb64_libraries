@@ -1,0 +1,17 @@
+Function Base32Encode$ (__I$)
+    Dim As _Unsigned _Byte J
+    Dim As _Unsigned Long O_OFFSET, I_OFFSET
+    Dim As _Unsigned _Integer64 BitBuffer
+    O$ = "": I_OFFSET = 0
+    B32$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"
+    While I_OFFSET <= Len(__I$)
+        BitBuffer = ReadBitBufferMSB(__I$, I_OFFSET, 5, J)
+        If I_OFFSET > Len(__I$) Then Exit While
+        O_OFFSET = O_OFFSET + 1
+        If Len(O$) < O_OFFSET Then O$ = O$ + String$(65536, 0)
+        Asc(O$, O_OFFSET) = Asc(B32$, 1 + BitBuffer)
+    Wend
+    O$ = Left$(O$, O_OFFSET)
+    Base32Encode$ = O$ + String$(Len(O$) Mod 8, 61)
+End Function
+'$Include:'ReadBitBufferMSB.bm'
