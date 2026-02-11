@@ -30,5 +30,5 @@ Function UnixTime~&& ()
     days~&& = days~&& + (D& - 1)
 
     ' --- convert to seconds ---
-    UnixTime~&& = days~&& * 86400~&& + hh& * 3600~&& + mm& * 60~&& + ss& - 19800
+    UnixTime~&& = days~&& * 86400~&& + hh& * 3600~&& + mm& * 60~&& + ss&
 End Function
