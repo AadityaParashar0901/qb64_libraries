@@ -1,0 +1,13 @@
+Function ReverseMKI64$ (__I64~&&)
+    Dim __RMKI64 As String
+    __RMKI64 = String$(8, 0)
+    Asc(__RMKI64, 1) = _SHR(__I64~&&, 56)
+    Asc(__RMKI64, 2) = _SHR(__I64~&&, 48)
+    Asc(__RMKI64, 3) = _SHR(__I64~&&, 40)
+    Asc(__RMKI64, 4) = _SHR(__I64~&&, 32)
+    Asc(__RMKI64, 5) = _SHR(__I64~&&, 24)
+    Asc(__RMKI64, 6) = _SHR(__I64~&&, 16)
+    Asc(__RMKI64, 7) = _SHR(__I64~&&, 8)
+    Asc(__RMKI64, 8) = __I64~&&
+    ReverseMKI64$ = __RMKI64
+End Function
