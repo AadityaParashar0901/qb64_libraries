@@ -1,0 +1,11 @@
+Sub RoundedRectangle (X1 As Integer, Y1 As Integer, X2 As Integer, Y2 As Integer, C As Long, R As Single) Static
+    Static As Integer X, Y, XR1, XR2, YR1, YR2
+    XR1 = X1 + R: YR1 = Y1 + R
+    XR2 = X2 - R: YR2 = Y2 - R
+    Line (XR1, Y1)-(XR2, Y2), C, BF
+    Y = R: For X = 0 To R
+        While _Hypot(X, Y) > R: Y = Y - 1: Wend
+        Line (XR2 + X, YR1 - Y)-(XR2 + X, YR2 + Y), C
+        Line (XR1 - X, YR1 - Y)-(XR1 - X, YR2 + Y), C
+    Next X
+End Sub
