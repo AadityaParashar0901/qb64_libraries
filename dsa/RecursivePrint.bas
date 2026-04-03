@@ -26,13 +26,13 @@ Function RecursiveListStringPrint$ (LIST$, NEST~&)
     O = 6: T_OFFSET = 2
     T$ = "["
     For I = 1 To CVL(Mid$(LIST$, 2, 4)) - 1
-        L = CVI(Mid$(LIST$, O, 2))
+        L = CVL(Mid$(LIST$, O, 4))
         If I > 1 Then T$ = T$ + Space$(NEST~&)
-        T$ = T$ + RecursivePrint(Mid$(LIST$, O + 2, L), NEST~&) + "," + Chr$(10) ' + Chr$(10)
-        O = O + L + 2
+        T$ = T$ + RecursivePrint(Mid$(LIST$, O + 4, L), NEST~&) + "," + Chr$(10) ' + Chr$(10)
+        O = O + L + 4
     Next I
-    L = CVI(Mid$(LIST$, O, 2))
-    T$ = T$ + Space$(NEST~&) + RecursivePrint(Mid$(LIST$, O + 2, L), NEST~&) + "]"
+    L = CVL(Mid$(LIST$, O, 4))
+    T$ = T$ + Space$(NEST~&) + RecursivePrint(Mid$(LIST$, O + 4, L), NEST~&) + "]"
     RecursiveListStringPrint$ = T$
 End Function
 Function RecursiveMapPrint$ (__MAP$, NEST~&)
