@@ -1,7 +1,6 @@
 Function Base64Decode$ (__I$)
-    Dim As _Unsigned _Byte B, BitBufferSize, J
+    Dim As _Unsigned _Byte B, J
     Dim As _Unsigned Long O_OFFSET
-    Dim As _Unsigned _Integer64 BitBuffer
     O$ = ""
     B64$ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
     For I = 1 To Len(__I$)
@@ -9,9 +8,7 @@ Function Base64Decode$ (__I$)
         If B = 61 Then Exit For
         B = InStr(B64$, Chr$(B))
         If B = 0 Then Exit For
-        BitBuffer = _ShL(BitBuffer, 6) Or (B - 1)
-        BitBufferSize = BitBufferSize + 6
-        PutBitBuffer O$, O_OFFSET, BitBuffer, BitBufferSize, J
+        PutBitBuffer O$, O_OFFSET, B - 1, 6, J
     Next I
     Base64Decode$ = Left$(O$, O_OFFSET)
 End Function
