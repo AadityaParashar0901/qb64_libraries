@@ -1,4 +1,6 @@
-Sub PutBitBuffer (B$, B_OFFSET As _Unsigned Long, BitBuffer As _Unsigned _Integer64, BitBufferSize As _Unsigned _Byte, J As _Unsigned _Byte)
+Sub PutBitBuffer (B$, B_OFFSET As _Unsigned Long, __BitBuffer As _Unsigned _Integer64, __BitBufferSize As _Unsigned _Byte, J As _Unsigned _Byte)
+    Dim As _Unsigned _Integer64 BitBuffer: BitBuffer = __BitBuffer
+    Dim As _Unsigned _Byte BitBufferSize: BitBufferSize = __BitBufferSize
     While BitBufferSize
         B_OFFSET = B_OFFSET - (J = 0)
         If Len(B$) < B_OFFSET + 8 Then B$ = B$ + String$(65536, 0) ' Increase Size of Output Buffer if needed

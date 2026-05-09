@@ -1,4 +1,5 @@
-Function ReadBitBufferMSB~&& (B$, B_OFFSET As _Unsigned Long, Bits As _Unsigned _Byte, J As _Unsigned _Byte)
+Function ReadBitBufferMSB~&& (B$, B_OFFSET As _Unsigned Long, __Bits As _Unsigned _Byte, J As _Unsigned _Byte)
+    Dim As _Unsigned _Byte Bits: Bits = __Bits
     Dim BitBuffer As _Unsigned _Integer64
     BitBuffer = 0
     While Bits
