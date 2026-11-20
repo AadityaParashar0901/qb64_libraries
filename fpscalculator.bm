@@ -1,0 +1,14 @@
+Sub CalculateFps (fps As FpsType) Static
+  Static As Double currentTime, deltaTime
+
+  currentTime = Timer(0.001)
+  deltaTime = currentTime - fps.lastTime
+
+  fps.ticks = fps.ticks + 1
+
+  If deltaTime >= 0.1 Then
+    fps.Fps = fps.ticks / (currentTime - fps.lastTime)
+    fps.ticks = 0
+    fps.lastTime = currentTime
+  End If
+End Sub
