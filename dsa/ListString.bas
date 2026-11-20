@@ -87,6 +87,17 @@ Function ListStringGet$ (LIST$, POSITION As _Unsigned Long)
     Next I
     ListStringGet$ = Mid$(LIST$, O + 4, CVL(Mid$(LIST$, O, 4)))
 End Function
+Function ListStringGetLast$ (LIST$)
+    Dim As Long O, I, L
+    If Len(LIST$) < 5 Then Exit Function
+    If Asc(LIST$) <> 1 Then Exit Function
+    O = 6
+    For I = 1 To CVL(Mid$(LIST$, 2, 4)) - 1
+        L = CVL(Mid$(LIST$, O, 4))
+	O = O + L + 4
+    Next I
+    ListStringGetLast$ = Mid$(LIST$, O + 4, CVL(Mid$(LIST$, O, 4)))
+End Function
 Sub ListStringInsert (LIST$, ITEM$, POSITION As _Unsigned Long)
     Dim As Long O, I, L
     If Len(LIST$) < 5 Then Exit Sub
