@@ -5,7 +5,7 @@ Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)
     __WIDTH = _Width(__IMAGE): __HEIGHT = _Height(__IMAGE)
     __IHDR = "IHDR" + ReverseMKL$(__WIDTH) + ReverseMKL$(__HEIGHT) + MKI$(&H0608) + String$(3, 0)
-    __IMAGDATA = String$((__HEIGHT + 1) * __WIDTH * 4, 0)
+    __IMAGDATA = String$((__WIDTH * 4 + 1) * __HEIGHT, 0)
     __OFFSET = 1
     __SOURCE = _Source
     _Source __IMAGE
@@ -14,10 +14,10 @@ Function PNG32 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
         __OFFSET = __OFFSET + 1
         For __X = 0 To __WIDTH - 1
             __P = Point(__X, __Y)
-            Asc(__IMAGDATA, __OFFSET) = _SHR(__P, 16)
-            Asc(__IMAGDATA, __OFFSET + 1) = _SHR(__P, 8)
+            Asc(__IMAGDATA, __OFFSET) = _ShR(__P, 16)
+            Asc(__IMAGDATA, __OFFSET + 1) = _ShR(__P, 8)
             Asc(__IMAGDATA, __OFFSET + 2) = __P
-            Asc(__IMAGDATA, __OFFSET + 3) = _SHR(__P, 24)
+            Asc(__IMAGDATA, __OFFSET + 3) = _ShR(__P, 24)
             __OFFSET = __OFFSET + 4
         Next __X
     Next __Y
@@ -42,7 +42,7 @@ Function PNG (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)
     __WIDTH = _Width(__IMAGE): __HEIGHT = _Height(__IMAGE)
     __IHDR = "IHDR" + ReverseMKL$(__WIDTH) + ReverseMKL$(__HEIGHT) + MKI$(&H0208) + String$(3, 0)
-    __IMAGDATA = String$((__HEIGHT + 1) * __WIDTH * 3, 0)
+    __IMAGDATA = String$((__WIDTH * 3 + 1) * __HEIGHT, 0)
     __OFFSET = 1
     __SOURCE = _Source
     _Source __IMAGE
@@ -52,8 +52,8 @@ Function PNG (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
         For __X = 0 To __WIDTH - 1
             __P = Point(__X, __Y)
             Asc(__IMAGDATA, __OFFSET) = __P
-            Asc(__IMAGDATA, __OFFSET + 1) = _SHR(__P, 16)
-            Asc(__IMAGDATA, __OFFSET + 2) = _SHR(__P, 8)
+            Asc(__IMAGDATA, __OFFSET + 1) = _ShR(__P, 16)
+            Asc(__IMAGDATA, __OFFSET + 2) = _ShR(__P, 8)
             __OFFSET = __OFFSET + 3
         Next __X
     Next __Y
@@ -78,7 +78,7 @@ Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     __PNGHEADER = MKL$(&H474E5089) + MKL$(&H0A1A0A0D)
     __WIDTH = _Width(__IMAGE): __HEIGHT = _Height(__IMAGE)
     __IHDR = "IHDR" + ReverseMKL$(__WIDTH) + ReverseMKL$(__HEIGHT) + MKI$(&H08) + String$(3, 0)
-    __IMAGDATA = String$((__HEIGHT + 1) * __WIDTH, 0)
+    __IMAGDATA = String$((__WIDTH + 1) * __HEIGHT, 0)
     __OFFSET = 1
     __SOURCE = _Source
     _Source __IMAGE
@@ -87,7 +87,7 @@ Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
         __OFFSET = __OFFSET + 1
         For __X = 0 To __WIDTH - 1
             __P = Point(__X, __Y)
-            Asc(__IMAGDATA, __OFFSET) = (_SHR(__P, 24) + _SHR(__P, 16) + _SHR(__P, 8)) \ 3
+            Asc(__IMAGDATA, __OFFSET) = (_ShR(__P, 24) + _ShR(__P, 16) + _ShR(__P, 8)) \ 3
             __OFFSET = __OFFSET + 1
         Next __X
     Next __Y
@@ -106,4 +106,4 @@ Function PNG0 (__FILENAME As String, __IMAGE As Long, __PNGDATA As String)
     If _FileExists(__FILENAME) Then PNG0 = -1 Else PNG0 = 0
 End Function
 '$Include:'crc32.bm'
-'$Include:'reversemkl.bm'
+'$Include:'ReverseMKL.bm'
